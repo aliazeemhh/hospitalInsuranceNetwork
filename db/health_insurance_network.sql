@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 13, 2019 at 03:47 PM
+-- Generation Time: May 13, 2019 at 03:53 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.0.23
 
@@ -132,7 +132,7 @@ DROP TABLE IF EXISTS `ins_ph_coverage`;
 CREATE TABLE IF NOT EXISTS `ins_ph_coverage` (
   `fcid` int(11) NOT NULL,
   `patient_name` varchar(50) NOT NULL,
-  `did` int(11) NOT NULL
+  `did_supports` json NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
