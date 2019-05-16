@@ -18,7 +18,6 @@
  <?php
  function checkData()
  {
-   echo $_POST["username"];
    $this->form();
  }
  ?>
@@ -38,15 +37,15 @@
 
       });
       var data = $(this).serialize();
-      console.log(data);
+
       $.ajax({
         type:"POST",
-        url:"controllers/submitQuery.php",
+        url:"/controllers/submitQuery.php",
         data:data,
         cache:false,
         success:function(response)
         {
-          console.log(response);
+
         }
       })
      //console.log(temp);
