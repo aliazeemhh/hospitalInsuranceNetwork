@@ -32,10 +32,6 @@ class siteController
   {
     session_start();
   }
-  public function form()
-  {
-    echo $_POST;
-  }
 }
 
 $siteController = new siteController();
