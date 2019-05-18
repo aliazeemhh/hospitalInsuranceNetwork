@@ -3,15 +3,12 @@ namespace models;
 
 require '../models/db_connect.php';
 
-use models\db_connect as db_connect;
-
-class db_insert_data extends db_connect
+class db_insert_data
 {
   public $openConnection;
   function __construct()
   {
-    echo $_POST['username'];
-    echo $_POST['password'];
+
   }
   function db_insert($table_name,$column,$values)
   {
@@ -44,12 +41,16 @@ class db_insert_data extends db_connect
       echo $col_str . " " . $val_str . "<br>";
       echo $conn->error;
     }
+    closeConnection($conn);
     //----------------
   }
   public function openConnection()
   {
-    $openConnection = new db_connect();
-    return $openConnection->OpenCon();
+    return OpenCon();
+  }
+  public function closeConnection($conn)
+  {
+    CloseCon($conn);
   }
 }
 ?>

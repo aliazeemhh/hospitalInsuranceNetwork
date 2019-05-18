@@ -39,13 +39,13 @@
       var data = $(this).serialize();
 
       $.ajax({
-        type:"POST",
+        type:"GET",
         url:"/controllers/submitQuery.php",
         data:data,
         cache:false,
         success:function(response)
         {
-
+          console.log(response);
         }
       })
      //console.log(temp);
