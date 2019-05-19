@@ -1,11 +1,11 @@
 <?php
 namespace controllers;
 
-if(isset($_POST['username']) && $_POST['password'])
+if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email_id']))
 {
   require '../models/db_insert_data.php';
 }
-else if(isset($_GET['username']) && $_GET['password'])
+else if(isset($_POST['username']) && isset($_POST['password']))
 {
   require '../models/db_get_data.php';
 }
@@ -27,12 +27,18 @@ class signup_login extends db_get_data
     else if(isset($_POST['username']) && isset($_POST['password']))
     {
       $querying = new db_get_data();
-      $getData = $querying->checkLogin($_GET['username'],  $_GET['password']);
+      $getData = $querying->checkLogin($_POST['username'],  $_POST['password']);
       if($getData == "false")
       {
         $arr = ["status"=>"fail", "response"=>"user details was not found"];
       }
       else {
+        echo !empty($_POST["remember"]);
+        if(!empty($_POST["remember"]))
+        {
+          setcookie("login_username",$_POST["username"],time()+ (10*365*24*60*60));
+          setcookie("login_password",$_POST["password"],time()+ (10*365*24*60*60));
+        }
         $userProfile = [];
         foreach ($getData as $key => $value)
         {
@@ -41,7 +47,7 @@ class signup_login extends db_get_data
             $userProfile[$key] = $value;
           }
         }
-        $arr = ["status"=>"success", "response"=>$userProfile];
+        $arr = ["status"=>"success", "response"=>$userProfile, "issetCookie"=>!empty($_POST["remember"])];
       }
       echo json_encode($arr);
     }
