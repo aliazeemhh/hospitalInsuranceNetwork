@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 13, 2019 at 03:53 PM
+-- Generation Time: May 19, 2019 at 06:44 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.0.23
 
@@ -48,13 +48,20 @@ CREATE TABLE IF NOT EXISTS `hin_user` (
   `name` varchar(50) NOT NULL,
   `email_id` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `role` bit(1) NOT NULL,
   `sub_role` varchar(50) NOT NULL,
   UNIQUE KEY `uid` (`uid`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email_id` (`email_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hin_user`
+--
+
+INSERT INTO `hin_user` (`uid`, `name`, `email_id`, `username`, `password`, `role`, `sub_role`) VALUES
+(0, 'Admin User', 'aliazeemh@gmail.com', 'admin', '*EFF0C114C1FD3F32E7EFF9778ABCE91A9224B99A', b'0', '0');
 
 -- --------------------------------------------------------
 
