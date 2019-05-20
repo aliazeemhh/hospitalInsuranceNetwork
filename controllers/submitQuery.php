@@ -35,6 +35,7 @@ class signup_login extends db_get_data
       if($getData == "false")
       {
         $arr = ["status"=>"fail", "result"=>"user details was not found"];
+        header("Location:?userDetail=fail");
       }
       else {
         if(!empty($_POST["remember"]))
