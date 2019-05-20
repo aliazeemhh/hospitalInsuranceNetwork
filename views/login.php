@@ -1,7 +1,7 @@
 <?php
-  if(isset($_POST['username']) && isset($_POST['password']))
+  if(isset($_POST['username']) && isset($_POST['password']) && !isset($_GET['userDetail']))
   {
-    require 'controllers/submitQuery.php';
+      return require 'controllers/submitQuery.php';
   }
   else
   {
@@ -27,6 +27,9 @@
        </label>
        <input type="submit" name="signin" class="button" value="SIGN IN">
      </form>
+     <?php if(isset($_GET['userDetail'])) {?>
+       <span class="invalid"> Invalid login </span>
+     <?php } ?>
      <!-- <a href="#">Forgot Password?</a> -->
      <div id="copyright">
        Copyright(c) 2018 Health Insurance Network

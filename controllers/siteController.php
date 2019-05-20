@@ -17,7 +17,7 @@ class siteController
     $this->is_active_sessions = session_status();
     if($this->is_active_sessions == 1 || $this->is_active_sessions == 0)
     {
-      return require("views/login.php");
+      require("views/login.php");
     }
     else if($param=="")
     {
@@ -42,10 +42,15 @@ class siteController
           session_start();
           $this->is_active_session("views/dashboard.php");
     }
+    else
+    {
+      $this->is_active_session("");
+    }
 
    // $this->start_session();
 
   }
+
 }
 
 $siteController = new siteController();
