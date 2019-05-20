@@ -1,7 +1,7 @@
 <?php
 namespace models;
 
-require '../models/db_connect.php';
+require 'models/db_connect.php';
 
 class db_get_data
 {
@@ -11,7 +11,7 @@ class db_get_data
     $hash = $this->mysql_41_password($password);
     $ins_sql = "SELECT name, username, email_id, role, sub_role FROM hin_user WHERE username='$username' AND password='$hash'";
     $encrypt = $conn->query($ins_sql);
-    if ($encrypt!="")
+    if (mysqli_num_rows($encrypt) > 0)
     {
       $encrypt = $encrypt->fetch_array();
     }
