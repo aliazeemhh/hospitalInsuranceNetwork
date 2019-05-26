@@ -5,6 +5,7 @@ namespace main;
 class siteController
 {
   private $is_active_sessions;
+  private $user_details=[];
   public function behavior()
   {
     return require('views/main.php');//$this->render("views/login.php");
@@ -16,7 +17,7 @@ class siteController
     $this->is_active_sessions = session_status();
     if($this->is_active_sessions == 1 || $this->is_active_sessions == 0)
     {
-      return require("views/login.php");
+      require("views/login.php");
     }
     else if($param=="")
     {
@@ -25,13 +26,31 @@ class siteController
     else
     {
       $rep = str_replace("views/","",str_replace(".php","",$param));
-      return require($param);
+      return header("Location:".$param);
     }
   }
-  public function start_session()
+  public function start_session($userDetail)
   {
-    session_start();
+    $this->user_details = [];
+    foreach ($userDetail as $key => $value)
+    {
+      $this->user_details["$key"] = $value;
+    }
+    if($this->user_details["$key"] == "success")
+    {
+          echo "successfully loaded!!!";
+          session_start();
+          $this->is_active_session("views/dashboard.php");
+    }
+    else
+    {
+      $this->is_active_session("");
+    }
+
+   // $this->start_session();
+
   }
+
 }
 
 $siteController = new siteController();

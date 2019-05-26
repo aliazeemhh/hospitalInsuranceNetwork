@@ -3,11 +3,11 @@ namespace controllers;
 
 if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email_id']))
 {
-  require '../models/db_insert_data.php';
+  require 'models/db_insert_data.php';
 }
 else if(isset($_POST['username']) && isset($_POST['password']))
 {
-  require '../models/db_get_data.php';
+  require 'models/db_get_data.php';
 }
 
 use models\db_get_data as db_get_data;
@@ -18,6 +18,10 @@ class signup_login extends db_get_data
 {
 
   function __construct()
+  {
+
+  }
+  function getUserDetails()
   {
     if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['email_id']) && isset($_POST['role']) && isset($_POST['sub_role']))
     {
@@ -30,10 +34,10 @@ class signup_login extends db_get_data
       $getData = $querying->checkLogin($_POST['username'],  $_POST['password']);
       if($getData == "false")
       {
-        $arr = ["status"=>"fail", "response"=>"user details was not found"];
+        $arr = ["status"=>"fail", "result"=>"user details was not found"];
+        header("Location:?userDetail=fail");
       }
       else {
-        echo !empty($_POST["remember"]);
         if(!empty($_POST["remember"]))
         {
           setcookie("login_username",$_POST["username"],time()+ (10*365*24*60*60));
@@ -47,11 +51,12 @@ class signup_login extends db_get_data
             $userProfile[$key] = $value;
           }
         }
-        $arr = ["status"=>"success", "response"=>$userProfile, "issetCookie"=>!empty($_POST["remember"])];
+        $arr = ["status"=>"success", "result"=>$userProfile, "issetCookie"=>!empty($_POST["remember"])];
       }
-      echo json_encode($arr);
+      return $arr;
     }
   }
 }
-$login = new signup_login();
+$login_signup = new signup_login();
+$this->start_session($login_signup->getUserDetails());
 ?>

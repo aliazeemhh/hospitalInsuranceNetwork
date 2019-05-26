@@ -1,7 +1,7 @@
 <?php
 namespace models;
 
-require '../models/db_connect.php';
+require 'models/db_connect.php';
 
 class db_insert_data
 {
