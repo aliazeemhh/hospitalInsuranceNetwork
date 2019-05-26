@@ -25,6 +25,7 @@ body
 {
   position: relative;
   min-height: calc(100% - 60px);
+  overflow: hidden;
 }
 .page-wrapper div{
     font-family: Arial, Helvetica, sans-serif;
@@ -106,3 +107,209 @@ span.invalid
   border-radius: 5px;
   opacity: 0.9;
 }
+
+/** Dashboard  **/
+.hosp-dashboard-wrapper
+{
+  font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    height: 100%;
+    width: 100%;
+}
+.hosp-dashboard-wrapper header{
+	position:relative;
+	display:block;
+	height:60px;
+	width:100%;
+	background-color:#fff;
+	box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+.hosp-dashboard-wrapper #logo{
+	position:relative;
+	display:block;
+	float:left;
+	height:90%;
+	margin-top:5px;
+	margin-left:8px;
+}
+.hosp-dashboard-wrapper header .search{
+	position:relative;
+	float:left;
+	margin:10px 0px 0px 100px;
+}
+.hosp-dashboard-wrapper header #user_name{
+	position:relative;
+	float:right;
+	text-align:right;
+}
+.hosp-dashboard-wrapper header #user_name span{
+	position:relative;
+	float:right;
+	margin:5px 0px 0px 0px;
+	padding:20px 25px 0px 0px;
+	}
+.hosp-dashboard-wrapper header #user_name img{
+	height:30px;
+	margin-top:15px;
+	margin-right:10px;
+	border-radius:100px;
+}
+
+.hosp-dashboard-wrapper header .search input{
+	height: 30px;
+	border: 1px thin #ccc;
+	width:200px;
+	padding-left:15px;
+	padding-right:15px;
+	margin-right:0px;
+}
+.hosp-dashboard-wrapper header .search button{
+	height: 38px;
+	background-color:#B62025;
+	border:none;
+	border-radius:4px;
+	color:#fff;
+	padding:0px 15px 0px 15px;
+}
+
+.hosp-dashboard-wrapper #dashboard-cont{
+	position:absolute;
+	top:10%;
+	height:100%;
+	padding:0px;
+	background-color:#F6F6F6;
+	width:100%;
+}
+
+.hosp-dashboard-wrapper menu{
+	position:relative;
+	float:left;
+	height:100%;
+	padding:0px;
+	margin:0px;
+	background-color:#030E35;
+	width:230px;
+}
+.hosp-dashboard-wrapper menu #profile{
+	position:relative;
+	display:block;
+	width:100%;
+	height:170px;
+	margin:0px 0px 30px 0px;
+	padding:0px;
+	top:0px;
+	background-color:#02071C;
+}
+
+.hosp-dashboard-wrapper menu #prof-dp{
+	position:relative;
+	display:block;
+	height:60%;
+	padding:10px;
+	margin:0px auto auto auto;
+	border-radius:150px;
+	text-align:center;
+
+}
+.hosp-dashboard-wrapper menu #user{
+	color:#fff;
+	text-align:center;
+}
+.hosp-dashboard-wrapper menu a{
+	position:relative;
+	left:0px;
+	color:#ffffff;
+	display:block;
+	padding:11px 11px 11px 11px;
+	width:90%;
+	height:10px;
+	text-decoration:none;
+	margin:5px 0px 0px 0px;
+	padding-left:30px;
+}
+.hosp-dashboard-wrapper menu a:hover{
+	background-color:#02071C;
+}
+
+.hosp-dashboard-wrapper .dashboard-views{
+	position:relative;
+	display:block;
+	color:#000;
+	padding-left:10px;
+	height:100%;
+	margin-left:230px;
+}
+.hosp-dashboard-wrapper .dashboard-views h2{
+	position:relative;
+	display:block;
+	margin-left:0px;
+	padding:0px;
+}
+.hosp-dashboard-wrapper .dashboard-views .status-cont{
+	position:relative;
+	display:block;
+	float:left;
+	background-color:#B62025;
+	width: calc((100% / 4) - 40px);
+	height: 90px;
+	color:#fff;
+	text-align:center;
+	padding:10px;
+	margin: 10px 7px;
+}
+
+.dashboard-views table td div.btn
+{
+  text-align: center;
+  border: 1px solid rgba(200,200,200,1);
+  border-radius: 5px;
+  padding: 5px 0px;
+  margin: 0px 10px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.dashboard-views table td div.btn:hover
+{
+  box-shadow: 0px 0px 10px rgba(200, 200, 200, 1);
+}
+.hosp-dashboard-wrapper .dashboard-views table{
+	background-color:#fff;
+	width:98%;
+}
+.hosp-dashboard-wrapper .dashboard-views table tr{
+	position:relative;
+	height:30px;
+	border:1px solid #000;
+	margin:10px;
+	padding-top:10px;
+}
+.hosp-dashboard-wrapper .dashboard-views table th .title{
+  font-weight:bold;
+}
+.hosp-dashboard-wrapper .dashboard-views table tr td,
+.hosp-dashboard-wrapper .dashboard-views table th td{
+  text-align: center;
+}
+.hosp-dashboard-wrapper .dashboard-views table tr:nth-last-child(odd)
+{
+  background-color: rgba(200,200,200,1);
+}
+.hosp-dashboard-wrapper .dashboard-views .status-approve{
+	cursor:pointer;
+	color:#fff;
+	background-color:#00a65a;
+	border-radius:2px;
+}
+.hosp-dashboard-wrapper .dashboard-views .status-declined{
+	cursor:pointer;
+	color:#fff;
+	background-color:#B62025;
+	border-radius:2px;
+}
+.hosp-dashboard-wrapper .dashboard-views .status-pending{
+	cursor:pointer;
+	background-color:#ccc;
+	border-radius:2px;
+}
+/** dashboard end **/
