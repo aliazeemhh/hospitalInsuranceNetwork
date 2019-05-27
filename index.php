@@ -1,6 +1,6 @@
 <?php
-namespace main;
-
+ob_start();
+session_start();
 class main
 {
   public function default()

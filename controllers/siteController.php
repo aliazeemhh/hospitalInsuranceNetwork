@@ -14,15 +14,20 @@ class siteController
 
   public function is_active_session($param="")
   {
-    //$this->set_session();
-    //session_start();
-    //echo $_SESSION['username'];
+    if(!empty($_GET['sys']))
+    {
+      switch($_GET['sys'])
+      {
+        case  "logout":
+        session_destroy();
+        break;
+        case "dashboard":
+        $param = "dashboard";
+        break;
+      }
+    }
     $this->is_active_sessions = session_status();
-    // if($this->is_active_sessions == 1)
-    // {
-    //   session_destroy();
-    // }
-    if(($this->is_active_sessions == 1) || ($this->is_active_sessions == 0))
+    if(($this->is_active_sessions == 1) || ($this->is_active_sessions == 0) || empty($_SESSION['name']))
     {
 
       return require("views/login.php");

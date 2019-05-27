@@ -18,13 +18,14 @@
 
          </div>
          <div id="menu-items">
-             <a href="">Dashboard</a>
+             <a href="?sys=dashboard">Dashboard</a>
              <a href="">Medical Tariff</a>
              <a href="">Insurers</a>
              <a href="">Hospitals</a>
              <a href="">Clients</a>
              <a href="">Subscriptions</a>
              <a href="">Messages</a>
+             <a href="?sys=logout">Logout</a>
  		</div>
  	</menu>
   <div class="dashboard-views">

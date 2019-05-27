@@ -17,6 +17,11 @@ class signup_login extends db_get_data
   {
 
   }
+  function send_sms($to, $from, $sub, $msg)
+  {
+    $headers = "From: ".$from."\n";
+    mail($to, $sub, $msg, $headers);
+  }
   function getUserDetails()
   {
     if(isset($_POST['username']) && isset($_POST['password']))
@@ -29,21 +34,18 @@ class signup_login extends db_get_data
         $_GET['userDetail']="fail";
       }
       else {
-        //session_destroy();
-        setcookie("PHPSESSID","",-1);
         if(!empty($_POST["remember"]))
         {
-          setcookie("login_username",$_POST["username"],time()+ (10*365*24*60*60));
-          setcookie("login_password",$_POST["password"],time()+ (10*365*24*60*60));
+          setcookie("login_username", $_POST["username"], time() + (10*60*60*24*365));
+          setcookie("login_password", $_POST["password"], time() + (10*60*60*24*365));
         }
         else
         {
-          setcookie("login_username","",-1);
-          setcookie("login_password","",-1);
+          setcookie("login_username", "", -1);
+          setcookie("login_password", "", -1);
         }
+        $this->send_sms("00923312667569@vtext.com", "someo@unk.com", "test", "this is great!!");
         $userProfile = [];
-        session_start();
-        $_COOKIE['PHPSESSID'] = session_id();
         $_SESSION['status'] = "success";
         foreach ($getData as $key => $value)
         {
