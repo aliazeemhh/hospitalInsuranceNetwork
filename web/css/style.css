@@ -276,6 +276,7 @@ span.invalid
 .hosp-dashboard-wrapper .dashboard-views table{
 	background-color:#fff;
 	width:98%;
+  border-spacing: 0px;
 }
 .hosp-dashboard-wrapper .dashboard-views table tr{
 	position:relative;
@@ -293,7 +294,7 @@ span.invalid
 }
 .hosp-dashboard-wrapper .dashboard-views table tr:nth-last-child(odd)
 {
-  background-color: rgba(200,200,200,1);
+  background-color: rgba(200,200,200,0.3);
 }
 .hosp-dashboard-wrapper .dashboard-views .status-approve{
 	cursor:pointer;
