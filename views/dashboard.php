@@ -8,7 +8,7 @@
        <input type="text" placeholder="CNIC, Mobile No., ID">
        <button type="submit" class="button" name="search-button">SEARCH CLIENT</button>
      </form>
-     <div id= "user_name"> <img src="web/img/profile_dp.jpg"> <span>Welcome <?php echo $_SESSION['name']; ?></span></div>
+     <div id= "user_name"> <img src="<?php echo $_SESSION['profile_image']; ?>"> <span>Welcome <?php echo $_SESSION['name']; ?></span></div>
    </header>
    <div id="dashboard-cont">
      <menu>
