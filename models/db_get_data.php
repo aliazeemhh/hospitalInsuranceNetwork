@@ -9,7 +9,7 @@ class db_get_data
   {
     $conn = OpenCon();
     $hash = $this->mysql_41_password($password);
-    $ins_sql = "SELECT name, username, email_id, role, sub_role FROM hin_user WHERE username='$username' AND password='$hash'";
+    $ins_sql = "SELECT name, username, profile_image, email_id, role, sub_role FROM hin_user WHERE username='$username' AND password='$hash'";
     $encrypt = $conn->query($ins_sql);
     if (mysqli_num_rows($encrypt) > 0)
     {
