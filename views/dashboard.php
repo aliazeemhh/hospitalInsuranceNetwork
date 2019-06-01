@@ -40,79 +40,63 @@ function getSessionData($arr, $val)
              <a href="">Subscriptions</a>
              <a href="">Messages</a>
              <a href="?sys=logout">Logout</a>
- 		</div>
- 	</menu>
-  <div class="dashboard-views">
-   <h2><?php echo ($_SESSION['role']==0?"Admin":($_SESSION['role']==1?"Hospital Management":($_SESSION['role']==2?"Insurance Management":""))); ?> Dashboard</h2>
-    <div>
-      <div class="status-cont"><b>APPROVALS</b></div>
-      <div class="status-cont"><b>CLAIMS</b></div>
-      <div class="status-cont"><b>INSURERS</b></div>
-      <div class="status-cont"><b>BILLING</b></div>
-    </div>
-    <ol>
-    <table>
-      <thead>
- 			  <tr>
-     		 <th class="title">#</th>
-         <th class="title">Paitient Name</th>
-         <th class="title">Name</th>
-         <th class="title">Policy #</th>
-         <th class="title">CNIC / HIC</th>
-         <th class="title">Diagnosis</th>
-         <th class="title">Insurer</th>
-         <th class="title">Date & Time</th>
-         <th class="title">Status</th>
-         <th class="title">Action</th>
-       </tr>
-     </thead>
-     <tbody>
-    	  <tr>
-          <td></td>
-          <td><li>Ali</li></td>
-          <td>Ali Az</td>
-          <td>215-32568-8</td>
-          <td>42101-5356928-6</td>
-          <td>High Fever</td>
-          <td>NJI</td>
-          <td>01/23/2018 10:59PM</td>
-          <td class="status-approve">Approved</td>
-          <td><div class="btn">View</div></td>
-
- 			  </tr>
-        <tr>
-          <td></td>
-          <td><li>Ali</li></td>
-          <td>Ali Az</td>
-          <td>215-32568-8</td>
-          <td>42101-5356928-6</td>
-          <td>High Fever</td>
-          <td>NJI</td>
-          <td>01/23/2018 10:59PM</td>
-          <td class="status-declined">Declined</td>
-          <td><div class="btn">View</div></td>
-
-        </tr>
-        <tr>
-          <td></td>
-          <td><li>Ali</li></td>
-          <td>Ali Az</td>
-          <td>215-32568-8</td>
-          <td>42101-5356928-6</td>
-          <td>High Fever</td>
-          <td>NJI</td>
-          <td>01/23/2018 10:59PM</td>
-          <td class="status-pending">Pending</td>
-          <td><div class="btn">Reminder</div></td>
-
-        </tr>
-      </tbody>
-         </table>
-       </ol>
+     		</div>
+     	</menu>
+      <div class="dashboard-views">
+       <h2><?php echo ($_SESSION['role']==0?"Admin":($_SESSION['role']==1?"Hospital Management":($_SESSION['role']==2?"Insurance Management":""))); ?> Dashboard</h2>
+        <div>
+          <div class="approvals status-cont"><b>APPROVALS</b>
+            <div class="summary">
+              <div class="center num">50</div>
+              <span class="seperator"></span>
+              <div class="center amount">500</div>
+            </div>
+          </div>
+          <div class="claims status-cont"><b>CLAIMS</b>
+            <div class="summary">
+              <div class="center num">50</div>
+              <span class="seperator"></span>
+              <div class="center amount">500</div>
+            </div>
+          </div>
+          <div class="insurers status-cont"><b>INSURERS</b>
+            <div class="summary">
+              <div class="center num">50</div>
+              <span class="seperator"></span>
+              <div class="center amount">500</div>
+            </div>
+          </div>
+          <div class="billings status-cont"><b>BILLING</b>
+            <div class="summary">
+              <div class="center num">50</div>
+              <span class="seperator"></span>
+              <div class="center amount">500</div>
+            </div>
+          </div>
+        </div>
+        <table id="dataGrid">
+          <thead>
+     			  <tr>
+            <th class="title">#</th>
+         		 <th class="title">Paitient Name</th>
+             <th class="title">Name</th>
+             <th class="title">Policy #</th>
+             <th class="title">CNIC / HIC</th>
+             <th class="title">Diagnosis</th>
+             <th class="title">Insurer</th>
+             <th class="title">Date & Time</th>
+             <th class="title">Status</th>
+             <th class="title">Action</th>
+           </tr>
+         </thead>
+         <tbody>
+         </tbody>
+       </table>
      </div>
    </div>
  </div>
 <script type="text/javascript">
+var tableGridRows = 0;
   function updateTable(data)
   {
     var length = data.length;
@@ -125,7 +109,7 @@ function getSessionData($arr, $val)
       {
         if (key == 0)
         {
-          tableData += "<td><li>"+value+"</li></td>";
+          tableData += "<td>"+value+"</td>";
         }
         else if(length-1 > key)
         {
@@ -136,20 +120,18 @@ function getSessionData($arr, $val)
         }
       });
       tableData += "</tr>";
-      console.log(tableData);
-      $('table tbody').append(tableData);
+      $('#dataGrid tbody').append(tableData);
+
     } catch (e) {
       window.onload = function()
       {
         data = $.extend(true,{},data);
-        console.log(data.length);
-        var tableData = "<tr>"+
-                          "<td></td>";
+        var tableData = "<tr>";
         $.each(data, function(key,value)
         {
           if (key == 0)
           {
-            tableData += "<td><li>"+value+"</li></td>";
+            tableData += "<td>"+value+"</td>";
           }
           else if(length-1 > key)
           {
@@ -162,10 +144,12 @@ function getSessionData($arr, $val)
         });
         tableData += "</tr>";
 
-        $('table tbody').append(tableData);
+        $('#dataGrid tbody').append(tableData);
 
       }
+
     }
+    console.log("incre");
   }
   function getStatus(arr)
   {
@@ -186,7 +170,11 @@ function getSessionData($arr, $val)
     {
       return '<td class="status-approve">Processed</td><td><div class="btn">View</div></td>';
     }
+
   }
+  $(document).ready( function () {
+    //$('#dataGrid').DataTable();
+  } );
 </script>
 <?php
 foreach ($_SESSION['claim'] as $key => $value) {
@@ -194,6 +182,7 @@ foreach ($_SESSION['claim'] as $key => $value) {
    //echo [$value['patient_name'], $value['name'], $value['policy_number'], $value['CNIC'], $value['diagnosis'][0]['diag_name'], $value['insurance_code'], $value['claim_date']];
    ?>
     <script type="text/javascript">
+      tableGridRows++;
       var table = [];
       table.push("<?php echo $value['patient_name']; ?>");
       table.push("<?php echo $value['name']; ?>");
@@ -216,3 +205,7 @@ foreach ($_SESSION['claim'] as $key => $value) {
    <?php
 }
  ?>
+ <script type="text/javascript">
+  console.log("loading Grid");
+  $('#dataGrid').DataTable();
+ </script>
