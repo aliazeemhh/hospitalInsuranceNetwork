@@ -1,3 +1,4 @@
+<script type="text/javascript" src="web/lib/jquery.min.js"></script>
 <?php
 ob_start();
 session_start();
@@ -13,4 +14,3 @@ $mainSite->default();
 ?>
 
 <link rel="stylesheet" type="text/css" href="web/css/style.css"></link>
-<script type="text/javascript" src="web/lib/jquery.min.js"></script>

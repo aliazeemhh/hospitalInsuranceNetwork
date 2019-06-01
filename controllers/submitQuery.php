@@ -12,11 +12,6 @@ use models\db_get_data as db_get_data;
  */
 class signup_login extends db_get_data
 {
-
-  function __construct()
-  {
-
-  }
   function send_sms($to, $from, $sub, $msg)
   {
     $headers = "From: ".$from."\n";
@@ -44,7 +39,7 @@ class signup_login extends db_get_data
           setcookie("login_username", "", -1);
           setcookie("login_password", "", -1);
         }
-        $this->send_sms("00923312667569@vtext.com", "someo@unk.com", "test", "this is great!!");
+        //$this->send_sms("aliazeemh@gmail.com", "someo@unk.com", "test", "this is great!!");
         $userProfile = [];
         $_SESSION['status'] = "success";
         foreach ($getData as $key => $value)

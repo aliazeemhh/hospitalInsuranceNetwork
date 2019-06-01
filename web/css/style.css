@@ -111,10 +111,11 @@ span.invalid
 /** Dashboard  **/
 .hosp-dashboard-wrapper
 {
+  position: relative;
   font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    height: 100%;
-    width: 100%;
+  font-size: 14px;
+  height: 100%;
+  width: 100%;
 }
 .hosp-dashboard-wrapper header{
 	position:relative;
@@ -222,7 +223,6 @@ span.invalid
 	color:#ffffff;
 	display:block;
 	padding:11px 11px 11px 11px;
-	width:90%;
 	height:10px;
 	text-decoration:none;
 	margin:5px 0px 0px 0px;

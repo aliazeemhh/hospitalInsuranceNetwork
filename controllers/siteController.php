@@ -19,10 +19,10 @@ class siteController
       switch($_GET['sys'])
       {
         case  "logout":
-        session_destroy();
+          session_destroy();
         break;
         case "dashboard":
-        $param = "dashboard";
+          $param = "dashboard";
         break;
       }
     }
