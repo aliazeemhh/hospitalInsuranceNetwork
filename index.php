@@ -1,7 +1,9 @@
-<script type="text/javascript" src="web/lib/jquery.min.js"></script>
 <?php
 ob_start();
 session_start();
+?>
+<script type="text/javascript" src="web/lib/jquery.min.js"></script>
+<?php
 class main
 {
   public function default()
