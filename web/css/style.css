@@ -282,6 +282,7 @@ span.invalid
 	text-align:center;
 	padding:10px;
 	margin: 10px 7px;
+  transition: all 0.5s ease;
 }
 
 .dashboard-views table td div.btn
@@ -481,6 +482,24 @@ div.summary
   {
     top: 60px;
     width: 100%;
+  }
+}
+@media only screen and (max-width:1024px) {
+  .hosp-dashboard-wrapper .dashboard-views .hin-summary
+  {
+    width: 95%;
+    display: flow-root;
+    margin: auto;
+  }
+  .hosp-dashboard-wrapper .dashboard-views .status-cont
+  {
+    width: 45%;
+  }
+}
+@media only screen and (max-width:705px) {
+  .hosp-dashboard-wrapper .dashboard-views .status-cont
+  {
+    width: 90%;
   }
 }
 @media only screen and (max-width:930px) {

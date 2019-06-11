@@ -14,7 +14,23 @@ function getSessionData($arr, $val)
   }
 }
 //getSessionData($_SESSION,"");
- ?>
+if($_SESSION['role'] == 1)
+{
+?>
+ <script type="text/javascript">
+  var hosp_id = "<?php echo $_SESSION['sub_role']; ?>";
+  </script>
+<?php
+}
+else if($_SESSION['role'] == 2)
+{
+  ?>
+   <script type="text/javascript">
+    var insurance_id = "<?php echo $_SESSION['sub_role']; ?>";
+    </script>
+  <?php
+}
+?>
  <script type="text/javascript">
   $(function(){
     $(".customDatePicker").datepicker();
@@ -65,7 +81,7 @@ function getSessionData($arr, $val)
             </label>
           </div>
         </div>
-        <div>
+        <div class="hin-summary">
           <div class="approvals status-cont"><b>APPROVALS</b>
             <div class="summary">
               <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
