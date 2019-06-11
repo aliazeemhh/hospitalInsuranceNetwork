@@ -461,7 +461,6 @@ div.summary
 @media only screen and (max-width:1110px) {
   .hosp-dashboard-wrapper menu.close
   {
-    position: relative;
     left: -230px;
     width: 0px;
   }
@@ -496,7 +495,7 @@ div.summary
     width: 45%;
   }
 }
-@media only screen and (max-width:705px) {
+@media only screen and (max-width:740px) {
   .hosp-dashboard-wrapper .dashboard-views .status-cont
   {
     width: 90%;
