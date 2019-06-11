@@ -15,6 +15,12 @@ function getSessionData($arr, $val)
 }
 //getSessionData($_SESSION,"");
  ?>
+ <script type="text/javascript">
+  $(function(){
+    $(".customDatePicker").datepicker();
+    $(".customDatePicker").datepicker("option", "dateFormat", "yy-mm-dd" );
+  })
+ </script>
  <div class="hosp-dashboard-wrapper">
    <header>
      <img id="logo" src="web/img/hin-logo.svg">
@@ -25,7 +31,7 @@ function getSessionData($arr, $val)
      <div id="user_name"> <img src="<?php echo $_SESSION['profile_image']!=""?$_SESSION['profile_image']:"web/img/profile.jpg"; ?>"> <span>Welcome <?php echo $_SESSION['name']; ?></span></div>
    </header>
    <div id="dashboard-cont">
-     <menu>
+     <menu class="close">
      	<div id="profile">
          	<img id="prof-dp" src="<?php echo $_SESSION['profile_image']!=""?$_SESSION['profile_image']:"web/img/profile.jpg"; ?>">
              <div id="user"><b><?php echo ($_SESSION['role']==0?"Admin":($_SESSION['role']==1?"Hospital Management":($_SESSION['role']==2?"Insurance Management":"Company Management"))); ?></b><br> <?php echo $_SESSION['email_id']; ?></div>
@@ -42,51 +48,66 @@ function getSessionData($arr, $val)
              <a href="?sys=logout">Logout</a>
      		</div>
      	</menu>
+      <div class="menu-btn"></div>
       <div class="dashboard-views">
-       <h2><?php echo ($_SESSION['role']==0?"Admin":($_SESSION['role']==1?"Hospital Management":($_SESSION['role']==2?"Insurance Management":""))); ?> Dashboard</h2>
+        <h2><?php echo ($_SESSION['role']==0?"Admin":($_SESSION['role']==1?"Hospital Management":($_SESSION['role']==2?"Insurance Management":""))); ?> Dashboard</h2>
+        <div class="customDateRange">
+          <div class="customDate">
+            <label>
+              <input type="text" class="customDatePicker start_date" placeholder="Start Date...">
+              <span class="calender"></span>
+            </label>
+          </div>
+          <div class="customDate">
+            <label>
+              <input type="text" class="customDatePicker end_date" placeholder="End Date...">
+              <span class="calender"></span>
+            </label>
+          </div>
+        </div>
         <div>
           <div class="approvals status-cont"><b>APPROVALS</b>
             <div class="summary">
-              <div class="center num">50</div>
+              <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
               <span class="seperator"></span>
-              <div class="center amount">500</div>
+              <div class="center amount"><div class="number">500</div><div class="text">Total Amount</div></div>
             </div>
           </div>
           <div class="claims status-cont"><b>CLAIMS</b>
             <div class="summary">
-              <div class="center num">50</div>
+              <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
               <span class="seperator"></span>
-              <div class="center amount">500</div>
+              <div class="center amount"><div class="number">500</div><div class="text">Total Amount</div></div>
             </div>
           </div>
           <div class="insurers status-cont"><b>INSURERS</b>
             <div class="summary">
-              <div class="center num">50</div>
+              <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
               <span class="seperator"></span>
-              <div class="center amount">500</div>
+              <div class="center amount"><div class="number">500</div><div class="text">Total Amount</div></div>
             </div>
           </div>
           <div class="billings status-cont"><b>BILLING</b>
             <div class="summary">
-              <div class="center num">50</div>
+              <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
               <span class="seperator"></span>
-              <div class="center amount">500</div>
+              <div class="center amount"><div class="number">500</div><div class="text">Total Amount</div></div>
             </div>
           </div>
         </div>
         <table id="dataGrid">
           <thead>
      			  <tr>
-            <th class="title">#</th>
-         		 <th class="title">Paitient Name</th>
-             <th class="title">Name</th>
-             <th class="title">Policy #</th>
-             <th class="title">CNIC / HIC</th>
-             <th class="title">Diagnosis</th>
-             <th class="title">Insurer</th>
-             <th class="title">Date & Time</th>
-             <th class="title">Status</th>
-             <th class="title">Action</th>
+            <th class="title col1">#</th>
+         		 <th class="title col2">Paitient Name</th>
+             <th class="title col3">Name</th>
+             <th class="title col4">Policy #</th>
+             <th class="title col5">CNIC / HIC</th>
+             <th class="title col6">Diagnosis</th>
+             <th class="title col7">Insurer</th>
+             <th class="title col8">Date & Time</th>
+             <th class="title col9">Status</th>
+             <th class="title col10">Action</th>
            </tr>
          </thead>
          <tbody>
@@ -96,24 +117,24 @@ function getSessionData($arr, $val)
    </div>
  </div>
 <script type="text/javascript">
-var tableGridRows = 0;
   function updateTable(data)
   {
     var length = data.length;
-    try {
+
       data = $.extend(true,{},data);
 
       var tableData = "<tr>"+
-                        "<td></td>";
+                        "<td class='col1'></td>";
       $.each(data, function(key,value)
       {
+        var colNum = Number(key) + 2;
         if (key == 0)
         {
-          tableData += "<td>"+value+"</td>";
+          tableData += "<td class='col"+colNum+"'>"+value+"</td>";
         }
         else if(length-1 > key)
         {
-          tableData += "<td>"+value+"</td>";
+          tableData += "<td class='col"+colNum+"'>"+value+"</td>";
         }
         else {
           tableData += getStatus(value);
@@ -121,39 +142,9 @@ var tableGridRows = 0;
       });
       tableData += "</tr>";
       $('#dataGrid tbody').append(tableData);
-
-    } catch (e) {
-      window.onload = function()
-      {
-        data = $.extend(true,{},data);
-        var tableData = "<tr>";
-        $.each(data, function(key,value)
-        {
-          if (key == 0)
-          {
-            tableData += "<td>"+value+"</td>";
-          }
-          else if(length-1 > key)
-          {
-            tableData += "<td>"+value+"</td>";
-          }
-          else
-          {
-            tableData += getStatus(value);
-          }
-        });
-        tableData += "</tr>";
-
-        $('#dataGrid tbody').append(tableData);
-
-      }
-
-    }
-    console.log("incre");
   }
   function getStatus(arr)
   {
-    console.log(arr);
     if ((arr[0] == 0) && (arr[1] == 0))
     {
       return '<td class="status-declined">Declined</td><td><div class="btn">View</div></td>';
@@ -170,19 +161,12 @@ var tableGridRows = 0;
     {
       return '<td class="status-approve">Processed</td><td><div class="btn">View</div></td>';
     }
-
   }
-  $(document).ready( function () {
-    //$('#dataGrid').DataTable();
-  } );
 </script>
 <?php
 foreach ($_SESSION['claim'] as $key => $value) {
-  //echo $value['patient_name'];
-   //echo [$value['patient_name'], $value['name'], $value['policy_number'], $value['CNIC'], $value['diagnosis'][0]['diag_name'], $value['insurance_code'], $value['claim_date']];
    ?>
     <script type="text/javascript">
-      tableGridRows++;
       var table = [];
       table.push("<?php echo $value['patient_name']; ?>");
       table.push("<?php echo $value['name']; ?>");
@@ -206,6 +190,25 @@ foreach ($_SESSION['claim'] as $key => $value) {
 }
  ?>
  <script type="text/javascript">
-  console.log("loading Grid");
   $('#dataGrid').DataTable();
+  var datepickerInput = '<div class="customDateRange">' +
+                          '<div class="customDate">' +
+                            '<label>' +
+                              '<input type="text" class="customDatePicker start_date" placeholder="Start Date...">' +
+                              '<span class="calender"></span>' +
+                            '</label>' +
+                          '</div>' +
+                          '<div class="customDate">' +
+                            '<label>' +
+                              '<input type="text" class="customDatePicker end_date" placeholder="End Date...">' +
+                              '<span class="calender"></span>' +
+                            '</label>' +
+                          '</div>' +
+                        '</div>';
+
+  $("#dataGrid_filter").prepend(datepickerInput);
+  $(".menu-btn").click(function(){
+    $("menu").toggleClass("close");
+    $(this).toggleClass("open");
+  });
  </script>

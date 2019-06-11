@@ -2,8 +2,17 @@
 ob_start();
 session_start();
 ?>
+<!DOCTYPE html>
+<html>
+<head>
 <script type="text/javascript" src="web/lib/jquery.min.js"></script>
 <script type="text/javascript" src="web/lib/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="web/lib/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="web/css/jquery.dataTables.min.css"></link>
+<link rel="stylesheet" type="text/css" href="web/css/style.css"></link>
+<link rel="stylesheet" type="text/css" href="web/css/jquery-ui.css"></link>
+</head>
+<body>
 <?php
 class main
 {
@@ -15,5 +24,5 @@ class main
 $mainSite = new main();
 $mainSite->default();
 ?>
-<link rel="stylesheet" type="text/css" href="web/css/jquery.dataTables.min.css"></link>
-<link rel="stylesheet" type="text/css" href="web/css/style.css"></link>
+</body>
+</html>
