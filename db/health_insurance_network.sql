@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 01, 2019 at 12:11 AM
+-- Generation Time: Jun 12, 2019 at 10:23 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -121,6 +121,40 @@ CREATE TABLE IF NOT EXISTS `hospital` (
 
 INSERT INTO `hospital` (`hosp_id`, `hosp_name`, `did_supports`, `hosp_logo`) VALUES
 (1, 'Agha Khan Hospital', '[\"01A0\", \"01A1\", \"04B3\", \"08C9\"]', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hosp_summary`
+--
+
+DROP TABLE IF EXISTS `hosp_summary`;
+CREATE TABLE IF NOT EXISTS `hosp_summary` (
+  `hosp_id` int(11) NOT NULL,
+  `sub_date` date NOT NULL,
+  `claim_num` int(11) NOT NULL,
+  `claim_amt` int(11) NOT NULL,
+  `approval_num` int(11) NOT NULL,
+  `approval_amt` int(11) NOT NULL,
+  `billing_num` int(11) NOT NULL,
+  `billing_amt` int(11) NOT NULL,
+  `insurer_num` int(11) NOT NULL,
+  `insurer_amt` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hosp_summary`
+--
+
+INSERT INTO `hosp_summary` (`hosp_id`, `sub_date`, `claim_num`, `claim_amt`, `approval_num`, `approval_amt`, `billing_num`, `billing_amt`, `insurer_num`, `insurer_amt`) VALUES
+(1, '2019-03-25', 1, 50000, 0, 0, 0, 0, 0, 0),
+(1, '2019-03-28', 1, 50000, 1, 50000, 0, 0, 0, 0),
+(1, '2019-04-02', 1, 50000, 1, 50000, 1, 50000, 0, 0),
+(1, '2019-04-25', 1, 50000, 1, 50000, 1, 50000, 1, 50000),
+(1, '2019-05-28', 2, 125000, 1, 50000, 1, 50000, 1, 50000),
+(1, '2019-06-02', 2, 125000, 2, 125000, 1, 50000, 1, 50000),
+(1, '2019-06-04', 2, 125000, 2, 125000, 2, 125000, 1, 50000),
+(1, '2019-06-08', 2, 125000, 2, 125000, 2, 125000, 2, 125000);
 
 -- --------------------------------------------------------
 
