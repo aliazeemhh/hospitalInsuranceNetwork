@@ -1,9 +1,12 @@
 <?php
 namespace controllers;
 
-if(isset($_POST['username']) && isset($_POST['password']))
+if(!empty($_POST['username']) && !empty($_POST['password']))
 {
   require 'models/db_get_data.php';
+}
+elseif (!empty($_POST['role']) && !empty($_POST['sub_role']) && !empty($_POST['start_date']) && !empty($_POST['end_date'])) {
+  require '../models/db_get_data.php';
 }
 
 use models\db_get_data as db_get_data;
@@ -19,7 +22,7 @@ class signup_login extends db_get_data
   }
   function getUserDetails()
   {
-    if(isset($_POST['username']) && isset($_POST['password']))
+    if(!empty($_POST['username']) && !empty($_POST['password']))
     {
       $querying = new db_get_data();
       $getData = $querying->checkLogin($_POST['username'],  $_POST['password']);
@@ -54,7 +57,20 @@ class signup_login extends db_get_data
       return $arr;
     }
   }
+  function getDateRange()
+  {
+    $querying = new db_get_data();
+    return $querying->getSummaryAmount("", $_POST['role'], $_POST['sub_role'], $_POST['start_date'], $_POST['end_date']);
+
+  }
 }
 $login_signup = new signup_login();
-$this->start_session($login_signup->getUserDetails());
+if (!empty($_POST['username']) && !empty($_POST['password'])) {
+  $this->start_session($login_signup->getUserDetails());
+}
+elseif(!empty($_POST['role']) && !empty($_POST['sub_role']) && !empty($_POST['start_date']) && !empty($_POST['end_date']))
+{
+  echo json_encode($login_signup->getDateRange());
+}
+
 ?>

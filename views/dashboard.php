@@ -67,7 +67,7 @@ else if($_SESSION['role'] == 2)
       <div class="menu-btn"></div>
       <div class="dashboard-views">
         <h2><?php echo ($_SESSION['role']==0?"Admin":($_SESSION['role']==1?"Hospital Management":($_SESSION['role']==2?"Insurance Management":""))); ?> Dashboard</h2>
-        <div class="customDateRange">
+        <div id="summaryFilter" class="customDateRange">
           <div class="customDate">
             <label>
               <input type="text" class="customDatePicker start_date" placeholder="Start Date...">
@@ -82,13 +82,6 @@ else if($_SESSION['role'] == 2)
           </div>
         </div>
         <div class="hin-summary">
-          <div class="approvals status-cont"><b>APPROVALS</b>
-            <div class="summary">
-              <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
-              <span class="seperator"></span>
-              <div class="center amount"><div class="number">500</div><div class="text">Total Amount</div></div>
-            </div>
-          </div>
           <div class="claims status-cont"><b>CLAIMS</b>
             <div class="summary">
               <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
@@ -96,18 +89,25 @@ else if($_SESSION['role'] == 2)
               <div class="center amount"><div class="number">500</div><div class="text">Total Amount</div></div>
             </div>
           </div>
-          <div class="insurers status-cont"><b>INSURERS</b>
+          <div class="approvals status-cont"><b>APPROVALS</b>
             <div class="summary">
-              <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
+              <div class="center num"><div class="number">0</div><div class="text">Total Number</div></div>
               <span class="seperator"></span>
-              <div class="center amount"><div class="number">500</div><div class="text">Total Amount</div></div>
+              <div class="center amount"><div class="number">0</div><div class="text">Total Amount</div></div>
             </div>
           </div>
           <div class="billings status-cont"><b>BILLING</b>
             <div class="summary">
-              <div class="center num"><div class="number">50</div><div class="text">Total Number</div></div>
+              <div class="center num"><div class="number">0</div><div class="text">Total Number</div></div>
               <span class="seperator"></span>
-              <div class="center amount"><div class="number">500</div><div class="text">Total Amount</div></div>
+              <div class="center amount"><div class="number">0</div><div class="text">Total Amount</div></div>
+            </div>
+          </div>
+          <div class="insurers status-cont"><b>INSURERS</b>
+            <div class="summary">
+              <div class="center num"><div class="number">0</div><div class="text">Total Number</div></div>
+              <span class="seperator"></span>
+              <div class="center amount"><div class="number">0</div><div class="text">Total Amount</div></div>
             </div>
           </div>
         </div>
@@ -178,6 +178,34 @@ else if($_SESSION['role'] == 2)
       return '<td class="status-approve">Processed</td><td><div class="btn">View</div></td>';
     }
   }
+  function setSummary(obj)
+  {
+    $(".claims .num .number").html(obj.claim_num);
+    $(".claims .amount .number").html(obj.claim_amt);
+    $(".approvals .num .number").html(obj.approval_num);
+    $(".approvals .amount .number").html(obj.approval_amt);
+    $(".billings .num .number").html(obj.billing_num);
+    $(".billings .amount .number").html(obj.billing_amt);
+    $(".insurers .num .number").html(obj.insurer_num);
+    $(".insurers .amount .number").html(obj.insurer_amt);
+  }
+  function getDateRange(contract)
+  {
+    $(".claims, .approvals, .billings, .insurers").addClass(".loading")
+    $.ajax({
+        type:"POST",
+        url:"controllers/submitQuery.php",
+        data:contract,
+        cache:false,
+        dataType: 'json',
+        success:function(response)
+        {
+          $(".claims, .approvals, .billings, .insurers").removeClass(".loading")
+          setSummary(response);
+        }
+      });
+  }
+  setSummary(<?php echo json_encode($_SESSION['summary']); ?>);
 </script>
 <?php
 foreach ($_SESSION['claim'] as $key => $value) {
@@ -227,4 +255,26 @@ foreach ($_SESSION['claim'] as $key => $value) {
     $("menu").toggleClass("close");
     $(this).toggleClass("open");
   });
+  $("#summaryFilter.customDateRange .customDate .start_date").change(function()
+  {
+    console.log("*******");
+    console.log($(this).val());
+    console.log($("#summaryFilter.customDateRange .customDate .end_date").val());
+    console.log("*******");
+    if(($(this).val() != "") && ($("#summaryFilter.customDateRange .customDate .end_date").val()))
+    {
+      getDateRange({role:"<?php echo $_SESSION['role']; ?>",sub_role:"<?php echo $_SESSION['sub_role']; ?>",start_date:$(this).val(),end_date:$("#summaryFilter.customDateRange .customDate .end_date").val()});
+    }
+  });
+  $("#summaryFilter.customDateRange .customDate .end_date").change(function()
+  {
+    console.log("*******");
+    console.log($(this).val());
+    console.log($("#summaryFilter.customDateRange .customDate .start_date").val());
+    if(($(this).val() != "") && ($("#summaryFilter.customDateRange .customDate .start_date").val()))
+    {
+      getDateRange({role:"<?php echo $_SESSION['role']; ?>",sub_role:"<?php echo $_SESSION['sub_role']; ?>",start_date:$("#summaryFilter.customDateRange .customDate .start_date").val(),end_date:$(this).val()});
+    }
+    console.log("*******");
+  })
  </script>

@@ -1,7 +1,14 @@
 <?php
 namespace models;
 
-require 'models/db_connect.php';
+if (!empty($_POST['role']) && !empty($_POST['sub_role']) && !empty($_POST['start_date']) && !empty($_POST['end_date']))
+{
+  require '../models/db_connect.php';
+}
+else
+{
+  require 'models/db_connect.php';
+}
 
 class db_get_data
 {
@@ -25,7 +32,8 @@ class db_get_data
             $details['claim'][$key]["diagnoses"][$did] = $this->submitQuery($conn, $this->diagnoses($did_code));
           }
         }
-
+        $details['summary'] = $this->submitQuery($conn, $this->hosp_summary($encrypt['sub_role']));
+        //$details['summary'] = $this->getSummaryAmount($conn, 1,1,'2019-04-25', '2019-06-03');
       }
       else if($encrypt['role']==2)
       {
@@ -48,6 +56,36 @@ class db_get_data
     }
     CloseCon($conn);
     return $encrypt;
+  }
+  public function getSummaryAmount($conn="", $role,$id, $startDate, $endDate)
+  {
+    $isConn = false;
+    if($conn == "")
+    {
+      $isConn = true;
+      $conn = OpenCon();
+    }
+    $summary = [];
+    if($role == 1)
+    {
+      $summary['startDate'] = $this->submitQuery($conn, $this->hosp_summary($id,$startDate));
+      $summary['endDate'] = $this->submitQuery($conn, $this->hosp_summary($id,$endDate));
+      $summary['amount'] = [
+                             "claim_num" => ($summary['endDate']['claim_num'] - $summary['startDate']['claim_num']),
+                             "claim_amt" => ($summary['endDate']['claim_amt'] - $summary['startDate']['claim_amt']),
+                             "approval_num" => ($summary['endDate']['approval_num'] - $summary['startDate']['approval_num']),
+                             "approval_amt" => ($summary['endDate']['approval_amt'] - $summary['startDate']['approval_amt']),
+                             "billing_num" => ($summary['endDate']['billing_num'] - $summary['startDate']['billing_num']),
+                             "billing_amt" => ($summary['endDate']['billing_amt'] - $summary['startDate']['billing_amt']),
+                             "insurer_num" => ($summary['endDate']['insurer_num'] - $summary['startDate']['insurer_num']),
+                             "insurer_amt" => ($summary['endDate']['insurer_amt'] - $summary['startDate']['insurer_amt'])
+                           ];
+    }
+    if($isConn == true)
+    {
+      CloseCon($conn);
+    }
+    return $summary['amount'];
   }
   private function submitQuery($conn, $ins_sql)
   {
@@ -108,6 +146,19 @@ class db_get_data
   {
     return "SELECT did, diag_code, diag_name FROM diagnosis WHERE diag_code='$search'";
   }
+  private function insurance_claim_date($search, $starting, $ending)
+  {
+    return "SELECT claim_no, policy_number, CNIC, patient_name, ipid, claim_date, inprocess_claim, status, hosp_id, claim_amount, did FROM hosp_summary WHERE hosp_id='$search' AND (sub_date BETWEEN '$starting' AND '$ending'))";
+  }
+  private function hosp_summary($search, $ending="")
+  {
+    if($ending == "")
+    {
+      $ending=date('y-m-d');
+    }
+    return "SELECT claim_num, claim_amt, approval_num, approval_amt, billing_num, billing_amt, insurer_num, insurer_amt FROM hosp_summary WHERE hosp_id='$search' AND sub_date=(SELECT MAX(sub_date) FROM hosp_summary WHERE hosp_id='$search' AND (sub_date BETWEEN '1990-01-01' AND '$ending'))";
+  }
+
   private function mysql_41_password($in)
   {
     $p = sha1($in, true);
@@ -115,5 +166,4 @@ class db_get_data
     return '*'.strtoupper($p);
   }
 }
-
 ?>
