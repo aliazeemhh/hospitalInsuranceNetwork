@@ -8,6 +8,7 @@ session_start();
 <script type="text/javascript" src="web/lib/jquery.min.js"></script>
 <script type="text/javascript" src="web/lib/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="web/lib/jquery-ui.js"></script>
+<script type="text/javascript" src="web/js/dashboard.js"></script>
 <link rel="stylesheet" type="text/css" href="web/css/jquery.dataTables.min.css"></link>
 <link rel="stylesheet" type="text/css" href="web/css/style.css"></link>
 <link rel="stylesheet" type="text/css" href="web/css/jquery-ui.css"></link>

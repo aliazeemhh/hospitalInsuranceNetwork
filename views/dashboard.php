@@ -133,79 +133,9 @@ else if($_SESSION['role'] == 2)
    </div>
  </div>
 <script type="text/javascript">
-  function updateTable(data)
-  {
-    var length = data.length;
 
-      data = $.extend(true,{},data);
-
-      var tableData = "<tr>"+
-                        "<td class='col1'></td>";
-      $.each(data, function(key,value)
-      {
-        var colNum = Number(key) + 2;
-        if (key == 0)
-        {
-          tableData += "<td class='col"+colNum+"'>"+value+"</td>";
-        }
-        else if(length-1 > key)
-        {
-          tableData += "<td class='col"+colNum+"'>"+value+"</td>";
-        }
-        else {
-          tableData += getStatus(value);
-        }
-      });
-      tableData += "</tr>";
-      $('#dataGrid tbody').append(tableData);
-  }
-  function getStatus(arr)
-  {
-    if ((arr[0] == 0) && (arr[1] == 0))
-    {
-      return '<td class="status-declined">Declined</td><td><div class="btn">View</div></td>';
-    }
-    else if ((arr[0] == 1) && (arr[1] == 0))
-    {
-      return '<td class="status-pending">Pending</td><td><div class="btn">Reminder</div></td>';
-    }
-    else if ((arr[0] == 1) && (arr[1] == 1))
-    {
-      return '<td class="status-approve">Approved</td><td><div class="btn">View</div></td>';
-    }
-    else if ((arr[0] == 0) && (arr[1] == 1))
-    {
-      return '<td class="status-approve">Processed</td><td><div class="btn">View</div></td>';
-    }
-  }
-  function setSummary(obj)
-  {
-    $(".claims .num .number").html(obj.claim_num);
-    $(".claims .amount .number").html(obj.claim_amt);
-    $(".approvals .num .number").html(obj.approval_num);
-    $(".approvals .amount .number").html(obj.approval_amt);
-    $(".billings .num .number").html(obj.billing_num);
-    $(".billings .amount .number").html(obj.billing_amt);
-    $(".insurers .num .number").html(obj.insurer_num);
-    $(".insurers .amount .number").html(obj.insurer_amt);
-  }
-  function getDateRange(contract)
-  {
-    $(".claims, .approvals, .billings, .insurers").addClass(".loading")
-    $.ajax({
-        type:"POST",
-        url:"controllers/submitQuery.php",
-        data:contract,
-        cache:false,
-        dataType: 'json',
-        success:function(response)
-        {
-          $(".claims, .approvals, .billings, .insurers").removeClass(".loading")
-          setSummary(response);
-        }
-      });
-  }
-  setSummary(<?php echo json_encode($_SESSION['summary']); ?>);
+  var summary = <?php echo json_encode($_SESSION['summary']); ?>;
+  setSummary(summary);
 </script>
 <?php
 foreach ($_SESSION['claim'] as $key => $value) {
@@ -234,47 +164,5 @@ foreach ($_SESSION['claim'] as $key => $value) {
 }
  ?>
  <script type="text/javascript">
-  $('#dataGrid').DataTable();
-  var datepickerInput = '<div class="customDateRange">' +
-                          '<div class="customDate">' +
-                            '<label>' +
-                              '<input type="text" class="customDatePicker start_date" placeholder="Start Date...">' +
-                              '<span class="calender"></span>' +
-                            '</label>' +
-                          '</div>' +
-                          '<div class="customDate">' +
-                            '<label>' +
-                              '<input type="text" class="customDatePicker end_date" placeholder="End Date...">' +
-                              '<span class="calender"></span>' +
-                            '</label>' +
-                          '</div>' +
-                        '</div>';
-
-  $("#dataGrid_filter").prepend(datepickerInput);
-  $(".menu-btn").click(function(){
-    $("menu").toggleClass("close");
-    $(this).toggleClass("open");
-  });
-  $("#summaryFilter.customDateRange .customDate .start_date").change(function()
-  {
-    console.log("*******");
-    console.log($(this).val());
-    console.log($("#summaryFilter.customDateRange .customDate .end_date").val());
-    console.log("*******");
-    if(($(this).val() != "") && ($("#summaryFilter.customDateRange .customDate .end_date").val()))
-    {
-      getDateRange({role:"<?php echo $_SESSION['role']; ?>",sub_role:"<?php echo $_SESSION['sub_role']; ?>",start_date:$(this).val(),end_date:$("#summaryFilter.customDateRange .customDate .end_date").val()});
-    }
-  });
-  $("#summaryFilter.customDateRange .customDate .end_date").change(function()
-  {
-    console.log("*******");
-    console.log($(this).val());
-    console.log($("#summaryFilter.customDateRange .customDate .start_date").val());
-    if(($(this).val() != "") && ($("#summaryFilter.customDateRange .customDate .start_date").val()))
-    {
-      getDateRange({role:"<?php echo $_SESSION['role']; ?>",sub_role:"<?php echo $_SESSION['sub_role']; ?>",start_date:$("#summaryFilter.customDateRange .customDate .start_date").val(),end_date:$(this).val()});
-    }
-    console.log("*******");
-  })
+  renderEvent();
  </script>
