@@ -19,6 +19,12 @@ if($_SESSION['role'] == 1)
 ?>
  <script type="text/javascript">
   var hosp_id = "<?php echo $_SESSION['sub_role']; ?>";
+  var dateRangeContract = {
+          role:"<?php echo $_SESSION['role']; ?>",
+          sub_role:"<?php echo $_SESSION['sub_role']; ?>",
+          start_date:"",
+          end_date:""
+        }
   </script>
 <?php
 }

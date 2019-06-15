@@ -74,7 +74,9 @@ function applySummaryFilter()
 {
   if(($("#summaryFilter.customDateRange .customDate .start_date").val() != "") && ($("#summaryFilter.customDateRange .customDate .end_date").val() != ""))
   {
-    getDateRange({role:"<?php echo $_SESSION['role']; ?>",sub_role:"<?php echo $_SESSION['sub_role']; ?>",start_date:$(this).val(),end_date:$("#summaryFilter.customDateRange .customDate .end_date").val()});
+    dateRangeContract.start_date = $("#summaryFilter.customDateRange .customDate .start_date").val();
+    dateRangeContract.end_date = $("#summaryFilter.customDateRange .customDate .end_date").val();
+    getDateRange(dateRangeContract);
   }
   else
   {
@@ -134,8 +136,12 @@ function renderEvent()
     $("menu").toggleClass("close");
     $(this).toggleClass("open");
   });
-  $("#summaryFilter.customDateRange .customDate .start_date").change(applySummaryFilter());
-  $("#summaryFilter.customDateRange .customDate .end_date").change(applySummaryFilter());
+  $("#summaryFilter.customDateRange .customDate .start_date").change(function(){
+    applySummaryFilter();
+  });
+  $("#summaryFilter.customDateRange .customDate .end_date").change(function(){
+    applySummaryFilter();
+  });
   $("#dataGrid_filter .customDateRange .customDate .start_date").change(function(){
     applyTableFilter();
   });
