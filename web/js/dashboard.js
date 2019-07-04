@@ -148,4 +148,8 @@ function renderEvent()
   $("#dataGrid_filter .customDateRange .customDate .end_date").change(function(){
     applyTableFilter();
   });
+  $('form.search').submit(function(event){
+    event.preventDefault();
+    $(".dashboard-views").load("views/hospital/claim.php");
+  })
 }

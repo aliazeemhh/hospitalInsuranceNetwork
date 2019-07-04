@@ -118,6 +118,8 @@ input[type=submit].button {
 }
 span.invalid
 {
+  position: absolute;
+  margin-top: 5px;
   padding: 5px 12px;
   background-color: rgba(255, 0, 0,0.3);
   border: 1px solid rgba(255, 0, 0,1);
@@ -285,7 +287,7 @@ span.invalid
   transition: all 0.5s ease;
 }
 
-.dashboard-views table td div.btn
+.dashboard-views table.dataTable td div.btn
 {
   text-align: center;
   border: 1px solid rgba(200,200,200,1);
@@ -295,45 +297,45 @@ span.invalid
   cursor: pointer;
   transition: all 0.5s ease;
 }
-.dashboard-views table td div.btn:hover
+.dashboard-views table.dataTable td div.btn:hover
 {
   box-shadow: 0px 0px 10px rgba(200, 200, 200, 1);
 }
-.hosp-dashboard-wrapper .dashboard-views table{
+.hosp-dashboard-wrapper .dashboard-views table.dataTable{
 	background-color:#fff;
 	width:100% !important;
   border-spacing: 0px;
   counter-reset: rowNumber;
 }
-.hosp-dashboard-wrapper .dashboard-views table tr{
+.hosp-dashboard-wrapper .dashboard-views table.dataTable tr{
 	position:relative;
 	height:30px;
 	border:1px solid #000;
 	margin:10px;
 	padding-top:10px;
 }
-.hosp-dashboard-wrapper .dashboard-views table th .title{
+.hosp-dashboard-wrapper .dashboard-views table.dataTable th .title{
   font-weight:bold;
 }
-.hosp-dashboard-wrapper .dashboard-views table tr td,
-.hosp-dashboard-wrapper .dashboard-views table th td{
+.hosp-dashboard-wrapper .dashboard-views table.dataTable tr td,
+.hosp-dashboard-wrapper .dashboard-views table.dataTable th td{
   text-align: center;
 }
-.hosp-dashboard-wrapper .dashboard-views table tbody tr
+.hosp-dashboard-wrapper .dashboard-views table.dataTable tbody tr
 {
   counter-increment: rowNumber;
 }
-.hosp-dashboard-wrapper .dashboard-views table tbody tr td:first-child::before {
+.hosp-dashboard-wrapper .dashboard-views table.dataTable tbody tr td:first-child::before {
     content: counter(rowNumber);
     min-width: 1em;
     margin-right: 0.5em;
     left: 0;
 }
-.hosp-dashboard-wrapper .dashboard-views table tbody tr td.dataTables_empty:first-child::before
+.hosp-dashboard-wrapper .dashboard-views table.dataTable tbody tr td.dataTables_empty:first-child::before
 {
   content: "";
 }
-.hosp-dashboard-wrapper .dashboard-views table tr:nth-last-child(odd)
+.hosp-dashboard-wrapper .dashboard-views table.dataTable tr:nth-last-child(odd)
 {
   background-color: rgba(200,200,200,0.3);
 }

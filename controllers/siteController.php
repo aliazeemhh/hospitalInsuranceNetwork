@@ -40,7 +40,6 @@ class siteController
     {
       //header("views/".$param.".php?".$_COOKIE['PHPSESSID']);
       //header("?SESSION=".$_COOKIE['PHPSESSID']);
-
       return require("views/".$param.".php");
     }
   }
@@ -63,9 +62,19 @@ class siteController
    // $this->start_session();
 
   }
+  public function render()
+  {
+    //--- function overwritten
+  }
   public function submit_query()
   {
     require 'controllers/submitQuery.php';
+
+    //use controllers\signup_login as signup_login;
+  }
+  public function getUserData()
+  {
+    return require 'controllers/submitQuery.php';
 
     //use controllers\signup_login as signup_login;
   }

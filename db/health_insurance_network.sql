@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 12, 2019 at 10:23 PM
+-- Generation Time: Jul 03, 2019 at 06:26 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -130,6 +130,7 @@ INSERT INTO `hospital` (`hosp_id`, `hosp_name`, `did_supports`, `hosp_logo`) VAL
 
 DROP TABLE IF EXISTS `hosp_summary`;
 CREATE TABLE IF NOT EXISTS `hosp_summary` (
+  `sr` int(20) NOT NULL AUTO_INCREMENT,
   `hosp_id` int(11) NOT NULL,
   `sub_date` date NOT NULL,
   `claim_num` int(11) NOT NULL,
@@ -139,22 +140,25 @@ CREATE TABLE IF NOT EXISTS `hosp_summary` (
   `billing_num` int(11) NOT NULL,
   `billing_amt` int(11) NOT NULL,
   `insurer_num` int(11) NOT NULL,
-  `insurer_amt` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `insurer_amt` int(11) NOT NULL,
+  PRIMARY KEY (`sr`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `hosp_summary`
 --
 
-INSERT INTO `hosp_summary` (`hosp_id`, `sub_date`, `claim_num`, `claim_amt`, `approval_num`, `approval_amt`, `billing_num`, `billing_amt`, `insurer_num`, `insurer_amt`) VALUES
-(1, '2019-03-25', 1, 50000, 0, 0, 0, 0, 0, 0),
-(1, '2019-03-28', 1, 50000, 1, 50000, 0, 0, 0, 0),
-(1, '2019-04-02', 1, 50000, 1, 50000, 1, 50000, 0, 0),
-(1, '2019-04-25', 1, 50000, 1, 50000, 1, 50000, 1, 50000),
-(1, '2019-05-28', 2, 125000, 1, 50000, 1, 50000, 1, 50000),
-(1, '2019-06-02', 2, 125000, 2, 125000, 1, 50000, 1, 50000),
-(1, '2019-06-04', 2, 125000, 2, 125000, 2, 125000, 1, 50000),
-(1, '2019-06-08', 2, 125000, 2, 125000, 2, 125000, 2, 125000);
+INSERT INTO `hosp_summary` (`sr`, `hosp_id`, `sub_date`, `claim_num`, `claim_amt`, `approval_num`, `approval_amt`, `billing_num`, `billing_amt`, `insurer_num`, `insurer_amt`) VALUES
+(1, 1, '2019-03-25', 1, 50000, 0, 0, 0, 0, 0, 0),
+(2, 1, '2019-03-28', 1, 50000, 1, 50000, 0, 0, 0, 0),
+(3, 1, '2019-04-02', 1, 50000, 1, 50000, 1, 50000, 0, 0),
+(4, 1, '2019-04-25', 1, 50000, 1, 50000, 1, 50000, 1, 50000),
+(5, 1, '2019-05-21', 2, 125000, 1, 50000, 1, 50000, 1, 50000),
+(6, 1, '2019-05-25', 2, 125000, 2, 125000, 1, 50000, 1, 50000),
+(7, 1, '2019-05-27', 2, 125000, 2, 125000, 2, 125000, 1, 50000),
+(8, 1, '2019-05-29', 2, 125000, 2, 125000, 2, 125000, 2, 125000),
+(9, 1, '2019-06-01', 3, 125100, 2, 125000, 2, 125000, 2, 125000),
+(10, 1, '2019-06-02', 4, 125300, 2, 125000, 2, 125000, 2, 125000);
 
 -- --------------------------------------------------------
 
@@ -188,7 +192,7 @@ INSERT INTO `insurance` (`ipid`, `Insurance_code`, `insurance_comp_name`, `insur
 
 DROP TABLE IF EXISTS `insurance_claim`;
 CREATE TABLE IF NOT EXISTS `insurance_claim` (
-  `claim_no` int(11) NOT NULL,
+  `claim_no` int(20) NOT NULL AUTO_INCREMENT,
   `policy_number` varchar(15) NOT NULL,
   `CNIC` varchar(15) NOT NULL,
   `patient_name` varchar(255) NOT NULL,
@@ -198,16 +202,19 @@ CREATE TABLE IF NOT EXISTS `insurance_claim` (
   `status` bit(1) NOT NULL DEFAULT b'0',
   `hosp_id` int(11) NOT NULL,
   `claim_amount` int(11) NOT NULL,
-  `did` json NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `did` json NOT NULL,
+  PRIMARY KEY (`claim_no`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `insurance_claim`
 --
 
 INSERT INTO `insurance_claim` (`claim_no`, `policy_number`, `CNIC`, `patient_name`, `ipid`, `claim_date`, `inprocess_claim`, `status`, `hosp_id`, `claim_amount`, `did`) VALUES
-(1, '215-32568-8', '42101-5356928-6', 'My Child', 1, '2019-03-25 19:55:00', b'1', b'0', 1, 75000, '[\"01A0\", \"01A1\"]'),
-(2, '325-38486-9', '28101-5356928-6', 'Tanveer Ahmed', 2, '2019-05-15 14:30:00', b'0', b'1', 1, 50000, '[\"01A1\"]');
+(1, '215-32561-8', '42101-5356928-6', 'My Child', 1, '2019-03-25 19:55:00', b'1', b'0', 1, 75000, '[\"01A0\", \"01A1\"]'),
+(2, '325-38486-9', '28101-5356928-6', 'Tanveer Ahmed', 2, '2019-05-15 14:30:00', b'0', b'1', 1, 50000, '[\"01A0\", \"01A1\"]'),
+(3, '215-32568-9', '52101-5356928-6', 'Talha Khan', 3, '2019-06-01 00:00:00', b'1', b'0', 1, 100, '[\"01A1\"]'),
+(4, '325-38586-9', '05661-5356928-6', 'Ashfaq Ahmed', 1, '2019-06-02 00:00:00', b'1', b'0', 1, 200, '[\"01A0\"]');
 
 -- --------------------------------------------------------
 
@@ -224,6 +231,7 @@ CREATE TABLE IF NOT EXISTS `insurance_policy_holder` (
   `mobile_number` varchar(15) NOT NULL,
   `valid_date` date NOT NULL,
   `total_limit` int(11) NOT NULL,
+  `room_limit` int(10) NOT NULL,
   `limit_consumed` int(11) NOT NULL,
   `company_id` int(11) NOT NULL DEFAULT '0',
   `tf_id` int(11) NOT NULL,
@@ -235,12 +243,12 @@ CREATE TABLE IF NOT EXISTS `insurance_policy_holder` (
 -- Dumping data for table `insurance_policy_holder`
 --
 
-INSERT INTO `insurance_policy_holder` (`policy_number`, `ipid`, `name`, `CNIC`, `mobile_number`, `valid_date`, `total_limit`, `limit_consumed`, `company_id`, `tf_id`, `fcid`) VALUES
-('215-32568-8', 1, 'Ali Hamza', '42101-5356928-6', '+923123456789', '2019-12-31', 450000, 0, 1, 1, 1),
-('325-38486-9', 2, 'Tanveer Ahmed', '28101-5356928-6', '+923124567899', '2019-12-31', 500000, 0, 1, 1, 2),
-('215-32568-8', 3, 'Talha Khan', '52101-5356928-6', '+923145678978', '2019-12-31', 550000, 0, 1, 1, 3),
-('325-38486-9', 1, 'Ashfaq Ahmed', '05661-5356928-6', '+923124587897', '2019-12-31', 450000, 0, 1, 1, 4),
-('215-32568-8', 1, 'M. Faisal', '75801-5356928-6', '+923145678979', '2019-12-31', 450000, 0, 1, 1, 5);
+INSERT INTO `insurance_policy_holder` (`policy_number`, `ipid`, `name`, `CNIC`, `mobile_number`, `valid_date`, `total_limit`, `room_limit`, `limit_consumed`, `company_id`, `tf_id`, `fcid`) VALUES
+('215-32561-8', 1, 'Ali Hamza', '42101-5356928-6', '+923123456789', '2019-12-31', 450000, 5000, 0, 1, 1, 1),
+('325-38486-9', 2, 'Tanveer Ahmed', '28101-5356928-6', '+923124567899', '2019-12-31', 500000, 7000, 0, 1, 1, 2),
+('215-32568-9', 3, 'Talha Khan', '52101-5356928-6', '+923145678978', '2019-12-31', 550000, 9000, 0, 1, 1, 3),
+('325-38586-9', 1, 'Ashfaq Ahmed', '05661-5356928-6', '+923124587897', '2019-12-31', 450000, 5000, 0, 1, 1, 4),
+('215-32598-8', 1, 'M. Faisal', '75801-5356928-6', '+923145678970', '2019-12-31', 450000, 5000, 0, 1, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -250,22 +258,24 @@ INSERT INTO `insurance_policy_holder` (`policy_number`, `ipid`, `name`, `CNIC`, 
 
 DROP TABLE IF EXISTS `ins_ph_coverage`;
 CREATE TABLE IF NOT EXISTS `ins_ph_coverage` (
+  `sr#` int(20) NOT NULL AUTO_INCREMENT,
   `fcid` int(11) NOT NULL,
-  `patient_name` varchar(50) NOT NULL,
-  `did_supports` json NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `covered_name` varchar(50) NOT NULL,
+  `did_supports` json NOT NULL,
+  PRIMARY KEY (`sr#`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ins_ph_coverage`
 --
 
-INSERT INTO `ins_ph_coverage` (`fcid`, `patient_name`, `did_supports`) VALUES
-(1, 'My Wife', '[\"01A0\", \"01A1\", \"04B3\", \"08C9\"]'),
-(1, 'My Child', '[\"01A0\", \"01A1\", \"04B3\", \"08C9\"]'),
-(2, 'Spouse', '[]'),
-(2, 'Tanveer\' child 1', '[]'),
-(3, 'Talha\' spouse', '[]'),
-(3, 'Talha\'s Child', '[]');
+INSERT INTO `ins_ph_coverage` (`sr#`, `fcid`, `covered_name`, `did_supports`) VALUES
+(1, 1, 'My Wife', '[\"01A0\", \"01A1\", \"04B3\", \"08C9\"]'),
+(2, 1, 'My Child', '[\"01A0\", \"01A1\", \"04B3\", \"08C9\"]'),
+(3, 2, 'Spouse', '[]'),
+(4, 2, 'Tanveer\' child 1', '[]'),
+(5, 3, 'Talha\' spouse', '[]'),
+(6, 3, 'Talha\'s Child', '[]');
 
 -- --------------------------------------------------------
 

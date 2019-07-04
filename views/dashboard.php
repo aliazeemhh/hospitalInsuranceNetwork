@@ -47,7 +47,7 @@ else if($_SESSION['role'] == 2)
    <header>
      <img id="logo" src="web/img/hin-logo.svg">
      <form class="search">
-       <input type="text" placeholder="CNIC, Mobile No., ID">
+       <input type="text" id="globalSearch" placeholder="CNIC, Mobile No., ID">
        <button type="submit" class="button" name="search-button">SEARCH CLIENT</button>
      </form>
      <div id="user_name"> <img src="<?php echo $_SESSION['profile_image']!=""?$_SESSION['profile_image']:"web/img/profile.jpg"; ?>"> <span>Welcome <?php echo $_SESSION['name']; ?></span></div>
@@ -72,6 +72,9 @@ else if($_SESSION['role'] == 2)
      	</menu>
       <div class="menu-btn"></div>
       <div class="dashboard-views">
+        <div class="dashboard-views-object">
+
+        </div>
         <h2><?php echo ($_SESSION['role']==0?"Admin":($_SESSION['role']==1?"Hospital Management":($_SESSION['role']==2?"Insurance Management":""))); ?> Dashboard</h2>
         <div id="summaryFilter" class="customDateRange">
           <div class="customDate">
@@ -138,13 +141,11 @@ else if($_SESSION['role'] == 2)
      </div>
    </div>
  </div>
-<script type="text/javascript">
 
-  var summary = <?php echo json_encode($_SESSION['summary']); ?>;
-  setSummary(summary);
-</script>
 <?php
-foreach ($_SESSION['claim'] as $key => $value) {
+$getUserData = $this->getUserData();
+
+foreach ($getUserData['claim'] as $key => $value) {
    ?>
     <script type="text/javascript">
       var table = [];
@@ -170,5 +171,7 @@ foreach ($_SESSION['claim'] as $key => $value) {
 }
  ?>
  <script type="text/javascript">
+ var summary = <?php echo json_encode($getUserData['summary']); ?>;
+ setSummary(summary);
   renderEvent();
  </script>
