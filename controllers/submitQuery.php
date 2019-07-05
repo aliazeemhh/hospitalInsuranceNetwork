@@ -4,6 +4,8 @@ namespace controllers;
 use models\db_get_data as db_get_data;
 use models\db_insert_data as db_insert_data;
 
+$session = "";
+
 if(!empty($_POST['username']) && !empty($_POST['password']))
 {
   require 'models/db_get_data.php';
@@ -110,6 +112,14 @@ if(!function_exists('controllers\loginStats'))
     function getUserUpdatedData()
     {
       $querying = new db_get_data();
+      if(!empty($_SESSION))
+      {
+        $session = $_SESSION;
+      }
+      else
+      {
+        $_SESSION = $session;
+      }
       $getData = $querying->getDashboardDetials($_SESSION);
       return $getData;
     }

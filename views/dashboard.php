@@ -141,7 +141,9 @@ else if($_SESSION['role'] == 2)
      </div>
    </div>
  </div>
+<div class="getDataInfo">
 
+</div>
 <?php
 $getUserData = $this->getUserData();
 
@@ -174,4 +176,13 @@ foreach ($getUserData['claim'] as $key => $value) {
  var summary = <?php echo json_encode($getUserData['summary']); ?>;
  setSummary(summary);
   renderEvent();
+  $(document).ready(function(){
+    var session = {
+      status:'<?php echo $_SESSION["status"]; ?>',
+      email_id:'<?php echo $_SESSION["email_id"]; ?>',
+      role:<?php echo $_SESSION["role"]; ?>,
+      sub_role:<?php echo $_SESSION["sub_role"]; ?>
+    }
+    $(".getDataInfo").load('views/hospital/getUserData.php#&status=<?php echo $_SESSION["status"]; ?>&email_id=<?php echo $_SESSION["email_id"]; ?>& role=<?php echo $_SESSION["role"]; ?>&sub_role=<?php echo $_SESSION["sub_role"]; ?>');
+  })
  </script>
