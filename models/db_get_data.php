@@ -169,7 +169,7 @@ if (!function_exists('OpenCon'))
     private function userLogin($username, $password)
     {
       $hash = $this->mysql_41_password($password);
-      return "SELECT name, username, profile_image, email_id, role, sub_role FROM hin_user WHERE username='$username' AND password='$hash'";
+      return "SELECT uid, name, username, profile_image, email_id, role, sub_role FROM hin_user WHERE username='$username' AND password='$hash'";
     }
     private function hospitalDetails($subrole)
     {

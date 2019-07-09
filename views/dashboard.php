@@ -1,4 +1,5 @@
 <?php
+$getUserData = $this->getUserData();
 function getSessionData($arr, $val)
 {
   foreach ($arr as $key => $value)
@@ -19,6 +20,7 @@ if($_SESSION['role'] == 1)
 ?>
  <script type="text/javascript">
   var hosp_id = "<?php echo $_SESSION['sub_role']; ?>";
+  var user_id = "<?php echo $_SESSION['uid']; ?>";
   var dateRangeContract = {
           role:"<?php echo $_SESSION['role']; ?>",
           sub_role:"<?php echo $_SESSION['sub_role']; ?>",
@@ -145,7 +147,6 @@ else if($_SESSION['role'] == 2)
 
 </div>
 <?php
-$getUserData = $this->getUserData();
 
 foreach ($getUserData['claim'] as $key => $value) {
    ?>
@@ -161,7 +162,10 @@ foreach ($getUserData['claim'] as $key => $value) {
         {
           echo ", ";
         }
-        echo $value1['diag_name'];
+        if(!empty($value1['diag_name']))
+        {
+          echo $value1['diag_name'];
+        }
       }
       ?>");
       table.push("<?php echo $value['insurance_code']; ?>");
@@ -177,12 +181,6 @@ foreach ($getUserData['claim'] as $key => $value) {
  setSummary(summary);
   renderEvent();
   $(document).ready(function(){
-    var session = {
-      status:'<?php echo $_SESSION["status"]; ?>',
-      email_id:'<?php echo $_SESSION["email_id"]; ?>',
-      role:<?php echo $_SESSION["role"]; ?>,
-      sub_role:<?php echo $_SESSION["sub_role"]; ?>
-    }
     $(".getDataInfo").load('views/hospital/getUserData.php#&status=<?php echo $_SESSION["status"]; ?>&email_id=<?php echo $_SESSION["email_id"]; ?>& role=<?php echo $_SESSION["role"]; ?>&sub_role=<?php echo $_SESSION["sub_role"]; ?>');
   })
  </script>

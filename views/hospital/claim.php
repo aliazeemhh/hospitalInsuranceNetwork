@@ -25,34 +25,31 @@
                 <table>
                     <tr>
                         <td>Participant Name:</td>
-                        <td id="participant_name">Talha Khan</td>
+                        <td id="participant_name">Policy Holder Name</td>
                     </tr>
                     <tr>
                         <td>Card No:</td>
-                        <td id="policy_number">234012102</td>
+                        <td id="policy_number">Policy Number</td>
                     </tr>
                     <tr>
                         <td>CNIC:</td>
-                        <td id="cnic" class="cnic">42301-0000000-0</td>
+                        <td id="cnic" class="cnic">CNIC Number</td>
                     </tr>
                     <tr>
                         <td>Valid Upto:</td>
-                        <td id="expiry">14/02/2020</td>
+                        <td id="expiry">Expiry Date</td>
                     </tr>
                     <tr>
                         <td>Hospitalization:</td>
-                        <td id="limit">300,000</td>
+                        <td id="limit">Limit</td>
                     </tr>
                     <tr>
                         <td>Room Limit:</td>
-                        <td id="room_limit">9,000</td>
+                        <td id="room_limit">Room Limit</td>
                     </tr>
                 </table>
              </div>
             <div class="rightsec">
-                <div>Saima Khan</div>
-                <div>Altaf Ali</div>
-                <div>Samar Khan</div>
             </div>
         </div>
         <div class="footer">24 Hours Emergency Contact (021) 111-111-111</div>
@@ -61,10 +58,10 @@
 <div class="hosp-patient-details-claims-views">
     <div class="patient_info">
         <div class="policy_holder"><b>CNIC</b></div>
-        <div class="policy_holder_name cnic">41110-1251654-9</div>
+        <div class="policy_holder_name cnic">CNIC Number</div>
     </div>
     <div class="claim_form">
-        <form action="http://google.com">
+        <form id="claim_form">
             <table>
                     <tr>
                         <td></td>
@@ -72,31 +69,34 @@
                     </tr>
                     <tr>
                         <td>Cost Estimation</td>
-                        <td><input type="text" placeholder="1,000"></td>
+                        <td><input type="text" class="amt" placeholder="1,000"></td>
                     </tr>
                     <tr>
                         <td>Case Type</td>
                         <td>
-                            <input type="radio" label="Eligibility" name="casetype">Eligibility
-                            <input type="radio" label="Extension" name="casetype">Extension
+                            <input type="radio" label="Eligibility" name="casetype" value="0" checked>Eligibility
+                            <input type="radio" label="Extension" name="casetype" value="1">Extension
                         </td>
                     </tr>
                     <tr>
                         <td>Length of Stay</td>
-                        <td><input type="text" placeholder="1 Day"></td>
+                        <td><input type="text" id="stay" placeholder="1 Day"></td>
                     </tr>
                     <tr>
                         <td>Diagnosis</td>
-                        <td><input type="text" placeholder="High Fever"><br/>
-                            <!-- <select type="text" id="diagnosis" placeholder="Type of Desease"><option selected disabled>Type of Desease</option></select> --></td> 
+                        <td><div type="text" id="diagnosis" placeholder="High Fever"></div>
+                            <div class="diagnosis-list hide">
+
+                            </div>
+                            <!-- <select type="text" id="diagnosis" placeholder="Type of Desease"><option selected disabled>Type of Desease</option></select> --></td>
                     </tr>
                     <tr>
                         <td>Date of Treatment</td>
-                        <td><input type="text" placeholder="mm/dd/yyyy"></td>
+                        <td><input type="text" id="postDate" placeholder="YYYY-MM-DD"></td>
                     </tr>
                     <tr>
                         <td>Doctor Details</td>
-                        <td><input type="text" placeholder="Doctor Name, Consultation and others"></td>
+                        <td><input type="text" id="drName" placeholder="Doctor Name, Consultation and others"></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -118,118 +118,4 @@
   <input type="submit" value="Submit"/>
 </form> -->
 
-<script type="text/javascript">
-var props = {};
-$.ajax({
-  type:"POST",
-  url:"../../controllers/submitQuery.php",
-  data:{
-    provider_detail: "userDetail",
-    data:searchData
-  },
-  cache:false,
-  dataType: 'json',
-  success:function(response)
-  {
-    $("#participant_name").html(response.name);
-    $("#policy_number").html(response.policy_number);
-    $(".cnic").html(response.CNIC);
-    $("#expiry").html(response.valid_date);
-    $("#limit").html(response.total_limit);
-    $("#room_limit").html(response.room_limit);
-    $(".rightsec").html("");
-    $(".participant_name").append("<option value='"+response.name+"' selected>"+response.name+"</option>")
-    $.each(response.covered,function(key,data)
-    {
-      $(".participant_name").append("<option value='"+ data.covered_name +"'>"+ data.covered_name +"</option>");
-      $(".rightsec").append("<div>"+data.covered_name+"</div>");
-    });
-  }
-});
-  $.ajax({
-    type:"POST",
-    url:"controllers/submitQuery.php",
-    data:{provider_detail: "insurance"},
-    cache:false,
-    dataType: 'json',
-    success:function(response)
-    {
-      console.log(response);
-      var option = "";
-      $.each(response,function(key,data){
-        option += "<option value='"+data.ipid+"'>"+data.insurance_code+"</option>";
-      });
-      $("#insurerName").append(option);
-    }
-  });
-  $.ajax({
-    type:"POST",
-    url:"controllers/submitQuery.php",
-    data:{provider_detail: "diagnosis"},
-    cache:false,
-    dataType: 'json',
-    success:function(response)
-    {
-      console.log(response);
-      var option = "";
-      props = response;
-      $.each(props,function(key,data){
-        option += "<option value='"+data.diag_code+"'>"+data.diag_name+"</option>";
-      });
-      $("#diagnosis").append(option);
-    },
-    error:function(e)
-    {
-      console.log(e);
-    }
-  });
-
-
-  $(document).ready(function(){
-    $("#postDate").datepicker();
-    $("#postDate").datepicker( 'option', 'dateFormat','yy-mm-dd');
-
-    // $("postDate").datapicker({
-    //   default:{
-    //
-    //   }
-    // })
-
-  })
-
-  $("#claim_form").submit(function(event){
-    event.preventDefault();
-    var arr = [];
-    arr.push($(this).find("#diagnosis").val());
-    var formData = {
-      patient_name:$(this).find(".ptname").val(),
-      name:$(this).find(".pholder").val(),
-      cnic:$(this).find(".cnic").val(),
-      policy_number:$(this).find(".pnumber").val(),
-      ipid:$(this).find("#insurerName").val(),
-      claim:$(this).find(".amt").val(),
-      date:$(this).find("#postDate").val(),
-      did:arr,
-      hosp_id:1
-    }
-    var serialize = $.extend(true,{},formData);
-    console.log(formData);
-    $.ajax({
-      type:"POST",
-      url:"../../controllers/submitQuery.php",
-      data:serialize,
-      cache:false,
-      dataType: 'json',
-      success:function(response)
-      {
-        var option = "";
-        props = response;
-        $.each(props,function(key,data){
-          option += "<option value='"+data.diag_code+"'>"+data.diag_name+"</option>";
-        });
-        $("#diagnosis").append(option);
-      }
-    });
-  });
-  console.log("rendering!!!");
-</script>
+<script type="text/javascript" src="web/js/claim.js"></script>

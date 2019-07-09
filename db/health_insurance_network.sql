@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 03, 2019 at 06:26 PM
+-- Generation Time: Jul 09, 2019 at 08:14 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `hosp_summary` (
   `insurer_num` int(11) NOT NULL,
   `insurer_amt` int(11) NOT NULL,
   PRIMARY KEY (`sr`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `hosp_summary`
@@ -158,7 +158,18 @@ INSERT INTO `hosp_summary` (`sr`, `hosp_id`, `sub_date`, `claim_num`, `claim_amt
 (7, 1, '2019-05-27', 2, 125000, 2, 125000, 2, 125000, 1, 50000),
 (8, 1, '2019-05-29', 2, 125000, 2, 125000, 2, 125000, 2, 125000),
 (9, 1, '2019-06-01', 3, 125100, 2, 125000, 2, 125000, 2, 125000),
-(10, 1, '2019-06-02', 4, 125300, 2, 125000, 2, 125000, 2, 125000);
+(10, 1, '2019-06-02', 4, 125300, 2, 125000, 2, 125000, 2, 125000),
+(11, 1, '2019-07-10', 5, 132860, 2, 125000, 2, 125000, 2, 125000),
+(12, 1, '2019-07-18', 5, 200300, 2, 125000, 2, 125000, 2, 125000),
+(13, 1, '2019-07-18', 5, 200300, 2, 125000, 2, 125000, 2, 125000),
+(14, 1, '2019-07-10', 5, 200300, 2, 125000, 2, 125000, 2, 125000),
+(15, 1, '2019-07-10', 5, 200300, 2, 125000, 2, 125000, 2, 125000),
+(16, 1, '2019-07-10', 5, 200300, 2, 125000, 2, 125000, 2, 125000),
+(17, 1, '2019-07-18', 5, 200300, 2, 125000, 2, 125000, 2, 125000),
+(18, 1, '2019-07-18', 5, 200300, 2, 125000, 2, 125000, 2, 125000),
+(19, 1, '2019-07-18', 5, 200900, 2, 125000, 2, 125000, 2, 125000),
+(20, 1, '2019-07-18', 5, 200900, 2, 125000, 2, 125000, 2, 125000),
+(21, 1, '2019-07-18', 5, 200900, 2, 125000, 2, 125000, 2, 125000);
 
 -- --------------------------------------------------------
 
@@ -192,7 +203,7 @@ INSERT INTO `insurance` (`ipid`, `Insurance_code`, `insurance_comp_name`, `insur
 
 DROP TABLE IF EXISTS `insurance_claim`;
 CREATE TABLE IF NOT EXISTS `insurance_claim` (
-  `claim_no` int(20) NOT NULL AUTO_INCREMENT,
+  `claim_no` int(11) NOT NULL AUTO_INCREMENT,
   `policy_number` varchar(15) NOT NULL,
   `CNIC` varchar(15) NOT NULL,
   `patient_name` varchar(255) NOT NULL,
@@ -202,19 +213,26 @@ CREATE TABLE IF NOT EXISTS `insurance_claim` (
   `status` bit(1) NOT NULL DEFAULT b'0',
   `hosp_id` int(11) NOT NULL,
   `claim_amount` int(11) NOT NULL,
+  `case_type` int(1) NOT NULL,
+  `stay` int(4) NOT NULL,
+  `doctor_name` text NOT NULL,
   `did` json NOT NULL,
+  `remarks` text NOT NULL,
+  `post_by` int(11) NOT NULL,
+  `approved_by` int(11) NOT NULL,
   PRIMARY KEY (`claim_no`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `insurance_claim`
 --
 
-INSERT INTO `insurance_claim` (`claim_no`, `policy_number`, `CNIC`, `patient_name`, `ipid`, `claim_date`, `inprocess_claim`, `status`, `hosp_id`, `claim_amount`, `did`) VALUES
-(1, '215-32561-8', '42101-5356928-6', 'My Child', 1, '2019-03-25 19:55:00', b'1', b'0', 1, 75000, '[\"01A0\", \"01A1\"]'),
-(2, '325-38486-9', '28101-5356928-6', 'Tanveer Ahmed', 2, '2019-05-15 14:30:00', b'0', b'1', 1, 50000, '[\"01A0\", \"01A1\"]'),
-(3, '215-32568-9', '52101-5356928-6', 'Talha Khan', 3, '2019-06-01 00:00:00', b'1', b'0', 1, 100, '[\"01A1\"]'),
-(4, '325-38586-9', '05661-5356928-6', 'Ashfaq Ahmed', 1, '2019-06-02 00:00:00', b'1', b'0', 1, 200, '[\"01A0\"]');
+INSERT INTO `insurance_claim` (`claim_no`, `policy_number`, `CNIC`, `patient_name`, `ipid`, `claim_date`, `inprocess_claim`, `status`, `hosp_id`, `claim_amount`, `case_type`, `stay`, `doctor_name`, `did`, `remarks`, `post_by`, `approved_by`) VALUES
+(1, '215-32561-8', '42101-5356928-6', 'My Child', 1, '2019-03-25 19:55:00', b'1', b'0', 1, 75000, 0, 0, '', '[\"01A0\", \"01A1\"]', '', 0, 0),
+(2, '325-38486-9', '28101-5356928-6', 'Tanveer Ahmed', 2, '2019-05-15 14:30:00', b'0', b'1', 1, 50000, 0, 0, '', '[\"01A0\", \"01A1\"]', '', 0, 0),
+(3, '215-32568-9', '52101-5356928-6', 'Talha Khan', 3, '2019-06-01 00:00:00', b'1', b'1', 1, 100, 0, 0, '', '[\"01A1\"]', '', 0, 0),
+(4, '325-38586-9', '05661-5356928-6', 'Ashfaq Ahmed', 1, '2019-06-02 00:00:00', b'0', b'0', 1, 200, 0, 0, '', '[\"01A0\"]', '', 0, 0),
+(5, '215-32561-8', '42101-5356928-6', 'My Wife', 1, '2019-07-18 00:00:00', b'1', b'0', 1, 75600, 0, 10, 'Dr Ali', '[\"01A1\", \"04B3\", \"08C9\", \"01A0\"]', '', 2, 0);
 
 -- --------------------------------------------------------
 

@@ -20,6 +20,7 @@ elseif ((!empty($_POST['role']) &&
 }
 elseif(!empty($_POST['patient_name']) && !empty($_POST['name']) && !empty($_POST['cnic']) && !empty($_POST['policy_number']))
 {
+  echo "success!";
   require '../models/db_get_data.php';
   require '../models/db_insert_data.php';
 
@@ -32,8 +33,8 @@ elseif(!empty($_POST['patient_name']) && !empty($_POST['name']) && !empty($_POST
       $db_insert_data = new db_insert_data();
       $querying = new db_get_data();
       $db_insert_data->db_insert("insurance_claim",
-                                ['policy_number',          'CNIC',           'patient_name',          'ipid',     'claim_amount',   'claim_date',     'did', 'inprocess_claim', 'status',   'hosp_id'],
-                                [$_POST['policy_number'], $_POST['cnic'], $_POST['patient_name'], $_POST['ipid'], $_POST['claim'], $_POST['date'], $_POST['did'],   '1',          '0', $_POST['hosp_id']]);
+                                ['policy_number',          'CNIC',           'patient_name',          'ipid',     'claim_amount',   'claim_date',     'did', 'inprocess_claim', 'status',   'hosp_id',       'case_type',          'stay',         'doctor_name',        'post_by',       'remarks', 'approved_by' ],
+                                [$_POST['policy_number'], $_POST['cnic'], $_POST['patient_name'], $_POST['ipid'], $_POST['claim'], $_POST['date'], $_POST['did'],   '1',          '0', $_POST['hosp_id'], $_POST['case_type'], $_POST['stay'], $_POST['doctor_name'], $_POST['post_by'], '', 0]);
 
       $summary = $querying->getHospSummary("",'1');
       $summary["claim_num"] += 1;

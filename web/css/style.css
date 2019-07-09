@@ -448,6 +448,47 @@ div.summary
 {
   left: 0px;
 }
+.hide
+{
+  display: none !important;
+}
+#diagnosis
+{
+  width: calc(100% - 2px);
+  background-color: white;
+  border: 1px solid #AAAAAA;
+  min-height: 35px;
+  max-height: 80px;
+  overflow: auto;
+}
+#diagnosis span
+{
+  position: relative;
+  border: 1px solid #AAA;
+  margin: 4px 5px;
+  padding: 6px 5px 6px 10px;
+  background: white;
+  display: inline-block;
+}
+#diagnosis span::after
+{
+  content: "X";
+  margin-left: 5px;
+  cursor: pointer;
+}
+.diagnosis-list
+{
+  width: calc(100% - 2px);
+  max-height: 100px;
+  background: white;
+  border: 1px solid #AAAAAA;
+  overflow: auto;
+}
+.diagnosis-list div
+{
+  padding: 10px;
+  cursor: pointer;
+}
 .menu-btn {
   position: absolute;
   width: 50px;

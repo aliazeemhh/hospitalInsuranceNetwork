@@ -23,7 +23,8 @@ class db_insert_data
         if (is_array($values[$i]))
         {
           //echo implode(" ",$values[$i]);
-          $val_str .= ',\'["' . implode(" ",$values[$i]) . '"]\'';
+
+          $val_str .= ',\'["' . implode('","',$values[$i]) . '"]\'';
 
         }
         elseif(($column[$i] == "inprocess_claim") || ($column[$i] == "status") || ($column[$i] == "hosp_id"))
