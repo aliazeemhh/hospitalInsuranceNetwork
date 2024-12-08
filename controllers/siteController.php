@@ -2,6 +2,7 @@
 //require('views/login.php');
 namespace main;
 
+
 class siteController
 {
   private $is_active_sessions;
@@ -13,20 +14,33 @@ class siteController
 
   public function is_active_session($param="")
   {
-    //$this->set_session();
-    $this->is_active_sessions = session_status();
-    if($this->is_active_sessions == 1 || $this->is_active_sessions == 0)
+    if(!empty($_GET['sys']))
     {
-      require("views/login.php");
+      switch($_GET['sys'])
+      {
+        case  "logout":
+          session_destroy();
+        break;
+        case "dashboard":
+          $param = "dashboard";
+        break;
+      }
+    }
+    $this->is_active_sessions = session_status();
+    if(($this->is_active_sessions == 1) || ($this->is_active_sessions == 0) || empty($_SESSION['name']))
+    {
+
+      return require("views/login.php");
     }
     else if($param=="")
     {
-      $this->behavior();
+      return require("views/dashboard.php");
     }
     else
     {
-      $rep = str_replace("views/","",str_replace(".php","",$param));
-      return header("Location:".$param);
+      //header("views/".$param.".php?".$_COOKIE['PHPSESSID']);
+      //header("?SESSION=".$_COOKIE['PHPSESSID']);
+      return require("views/".$param.".php");
     }
   }
   public function start_session($userDetail)
@@ -36,11 +50,9 @@ class siteController
     {
       $this->user_details["$key"] = $value;
     }
-    if($this->user_details["$key"] == "success")
+    if($this->user_details["status"] == "success")
     {
-          echo "successfully loaded!!!";
-          session_start();
-          $this->is_active_session("views/dashboard.php");
+      $this->is_active_session("dashboard");
     }
     else
     {
@@ -49,6 +61,22 @@ class siteController
 
    // $this->start_session();
 
+  }
+  public function render()
+  {
+    //--- function overwritten
+  }
+  public function submit_query()
+  {
+    require 'controllers/submitQuery.php';
+
+    //use controllers\signup_login as signup_login;
+  }
+  public function getUserData()
+  {
+    return require 'controllers/submitQuery.php';
+
+    //use controllers\signup_login as signup_login;
   }
 
 }

@@ -1,7 +1,14 @@
 <?php
-  if(isset($_POST['username']) && isset($_POST['password']) && !isset($_GET['userDetail']))
+  if(!empty($_SESSION['status']) && (!empty($_GET['dashboard'])))
   {
-      return require 'controllers/submitQuery.php';
+    if($_SESSION['status'] == "success")
+    {
+      $this->start_session($_SESSION);
+    }
+  }
+  else if(!empty($_POST['username']) && !empty($_POST['password']) && empty($_GET['userDetail']))
+  {
+    $this->submit_query();
   }
   else
   {
@@ -39,71 +46,3 @@
  <?php
   }
  ?>
- <script type="text/javascript">
- function createCookie(name, value, days) {
-   var expires;
-
-   if (days) {
-     var date = new Date();
-     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-     expires = "; expires=" + date.toGMTString();
-   } else {
-     expires = "";
-   }
-   document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
- }
- // window.onload = function()
- // {
- //   $(".login").submit(function(event)
- //   {
- //     event.preventDefault();
- //     //console.log($(this).find("input[name='username']").val());
- //     if(($(".login input.username").val() == "") || ($(".login input.password").val() == ""))
- //     {
- //       return;
- //     }
- //
- //     var form = $.extend(true,{},$(this).serialize().split("&"));
- //     var temp = {};
- //     $.each(form,function(key,data)
- //      {
- //        data = String(data).split("=");
- //        temp[data[0]] = data[1];
- //
- //      });
- //      var data = $(this).serialize();
- //
- //      $.ajax({
- //        type:"POST",
- //        url:"controllers/submitQuery.php",
- //        data:data,
- //        cache:false,
- //        dataType: 'json',
- //        success:function(response)
- //        {
- //          if(response.status == "success")
- //          {
- //            if(response.issetCookie)
- //            {
- //              createCookie("login_username",$(".login input.username").val(), 100);
- //              createCookie("login_password",$(".login input.password").val(), 100);
- //            }
- //            $.ajax({
- //              type:"POST",
- //              url:"#",
- //              data:response.response,
- //              cache:false,
- //              dataType: 'json',
- //              success:function(response)
- //              {
- //
- //              }
- //            })
- //          }
- //        }
- //      })
- //   });
-
- }
-
- </script>
